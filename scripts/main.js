@@ -4,34 +4,12 @@ Vue.component("side-menu", {
     props: ['passedView', 'passedTemplate', 'passedState'],
     data: function() {
         return {
-            currentSectionSelector: null
+            currentSectionSelector: null,
+            currentModuleSelector: null
         }
     },
-    computed: {
-
-        currentModuleIndex: function() {
-            var modulefilter = this.passedView.moduleReference
-            return this.passedTemplate[0].modulesArray.findIndex(k => k.moduleId == modulefilter)
-        },
-
-        nextModuleId: function() {
-            var nextModuleIndex = this.currentModuleIndex + 1
-            return this.passedTemplate[0].modulesArray[nextModuleIndex].moduleId
-        },
-
-        currentSectionIndex: function() {
-            var sectionfilter = this.passedView.sectionReference
-            return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray.findIndex(k => k.sectionId == sectionfilter)
-        },
-
-        nextSectionId: function() {
-            var nextSectionIndex = this.currentSectionIndex + 1
-            return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray[nextSectionIndex].sectionId
-        }
-    },
-
     methods: {
-        sideMenuHandler: function(type, template, ) {
+        sideMenuHandler: function(type, template) {
             
             if(type == "course") {
                 this.$emit('emit-view', 'course', template.courseId)
@@ -51,21 +29,28 @@ Vue.component("side-menu", {
             this.$emit('emit-media-manager')
             
             gsap.to(window, 1, {scrollTo:{y:"#side-menu", offsetY:15}})
+
+            this.moduleSelectorHandler()
             
-            // for when the side menu is clicked it will not work from this scope until the dom has been updated! 
             if(document.getElementById(this.passedView.sectionReference + 'Selector')) {
-                this.computedClass()
+                this.sectionSelectorHandler()
             }
         },
 
-        computedClass: function() {
-            // create an array from this object? and then filter it?
-            if(this.currentSectionSelector) {
-                gsap.to(this.currentSectionSelector, {backgroundColor: 'transparent'})
+        moduleSelectorHandler: function() {
+            if(this.currentModuleSelector) {
+                gsap.to(this.currentModuleSelector, 0.2, {rotate: 0})
             }
-            var ref = document.getElementById(this.passedView.sectionReference + 'Selector')
-            this.currentSectionSelector = ref
-            gsap.to(this.currentSectionSelector, {backgroundColor: 'red'})
+            this.currentModuleSelector = document.getElementById(this.passedView.moduleReference + 'Selector')
+            gsap.to(this.currentModuleSelector, 0.5, {rotate: -90})
+        },
+
+        sectionSelectorHandler: function() {
+            if(this.currentSectionSelector) {
+                gsap.to(this.currentSectionSelector, 0.2, {scale: 0, opacity: '0'})
+            }
+            this.currentSectionSelector = document.getElementById(this.passedView.sectionReference + 'Selector')
+            gsap.to(this.currentSectionSelector, 0.2, {scale: 1, opacity: '1'})
         },
 
         sliderHandler: function(type) {
@@ -80,9 +65,9 @@ Vue.component("side-menu", {
             var timeline = new TimelineMax({})
             
             if(this.passedState[type + 'Playing'] == true) { 
-                timeline.to(fill, 0.2, {backgroundColor: '#337AB7'}, 0.2)
                 timeline.set(label, {text: "on", x: '-25px'}, 0.2)
                 timeline.to(knob, 0.2, {x: '48px'}, 0.2)
+                timeline.to(fill, 0.1, {backgroundColor: '#337AB7'}, 0.3)
             }
 
             if(this.passedState[type + 'Playing'] == false) {
@@ -93,7 +78,7 @@ Vue.component("side-menu", {
         }
     },
     updated: function() {
-        return this.computedClass()
+        return this.sectionSelectorHandler()
     }
 });
 
@@ -197,7 +182,7 @@ var vueRoot = new Vue({
             // initial animation timeline on this component's mounted hook
             TweenLite.defaultEase = Linear.easeNone
             var timeline = new TimelineMax({repeat:-1, yoyo:true})
-            timeline.fromTo('#hero-cta', 0.8, {rotate: -2, scale: 0.9}, {rotate: 2, scale: 1.1})
+            timeline.fromTo('#hero-cta', 0.5, {rotate: -1, scale: 0.99}, {rotate: 1, scale: 1.05})
         },
 
         scrollTo: function() {
@@ -205,10 +190,12 @@ var vueRoot = new Vue({
         },
 
         firstEnter: function(el, done) {
+            gsap.fromTo (el, 0.5, {opacity: 0}, {opacity: 1})
             done()
         },
         
         firstLeave: function(el, done) {
+            gsap.to (el, 0.5, {opacity: 0})
             done()
         }
     },
@@ -227,3 +214,25 @@ var vueRoot = new Vue({
         }
     }
 });
+
+// computed: {
+    //     currentModuleIndex: function() {
+    //         var modulefilter = this.passedView.moduleReference
+    //         return this.passedTemplate[0].modulesArray.findIndex(k => k.moduleId == modulefilter)
+    //     },
+
+    //     nextModuleId: function() {
+    //         var nextModuleIndex = this.currentModuleIndex + 1
+    //         return this.passedTemplate[0].modulesArray[nextModuleIndex].moduleId
+    //     },
+
+    //     currentSectionIndex: function() {
+    //         var sectionfilter = this.passedView.sectionReference
+    //         return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray.findIndex(k => k.sectionId == sectionfilter)
+    //     },
+
+    //     nextSectionId: function() {
+    //         var nextSectionIndex = this.currentSectionIndex + 1
+    //         return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray[nextSectionIndex].sectionId
+    //     }
+    // },

@@ -17,6 +17,10 @@
                 <div class="portal-grid__hero hero-grid">
                     <h1 class="hero-grid__title text text_giant text_white">Child and Adult Care Food Program</h1>
                     <h2 class="hero-grid__subtitle text text_larger text_white">Adult Eligibility Application Training</h2>
+                    <h2 class="hero-grid__ie-warning text text_small text_white">
+                        <strong>Internet Explorer detected.</strong>
+                        <br>For the best experience, please use a modern browser such as Edge, Chrome, or Firefox.
+                    </h2>
                     <h3 @click="scrollTo()" id="hero-cta" class="hero-grid__cta text text_white text_uppercase text_link">scroll down</h3>
                 </div>
 
@@ -53,7 +57,8 @@
                                             @click="sideMenuHandler('module', module, key)" 
                                             class="side-menu__flex-item">
                                             <img 
-                                                src="./media/chevron-down.svg" 
+                                                src="./media/chevron-down.svg"
+                                                v-bind:id="module.moduleId + 'Selector'"
                                                 class="side-menu__module-icon">
                                             <h3 class="side-menu__module-link text text_medium text_link">
                                                 {{ module.moduleName }}
@@ -62,13 +67,18 @@
                                     </div>
                                     <div v-for="(section, key) in module.sectionsArray">
                                         <div v-if="section.sectionParentId == passedView.moduleReference">
-                                            <h4 
+                                            <div 
                                                 @click="sideMenuHandler('section', section, key)"
-                                                v-bind:id="section.sectionId + 'Selector'"
-                                                v-bind:class="computedClass"
-                                                class="side-menu__section-link text text_smaller text_link">
-                                                {{ section.sectionName }}
-                                            </h4>
+                                                class="side-menu__flex-item">
+                                                <img 
+                                                    src="./media/dot.svg"
+                                                    v-bind:id="section.sectionId + 'Selector'"
+                                                    class="side-menu__section-icon"
+                                                >
+                                                <h4 class="side-menu__section-link text text_smaller text_link">
+                                                    {{ section.sectionName }}
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -101,39 +111,37 @@
                         </div>
                         <div v-if="view.sectionReference == 'regulations'" key="regulations" class="section">
                             <audio id='audio' src="./media/eligibility-adult-sc1.mp3"></audio>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                            <h1>TWO</h1>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                            <h1>THREE</h1>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                            <h1>FOUR</h1>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
                         </div>
                     </transition>
                 </div>
 
                 <div v-if="view.moduleReference == 'eligibility-application'" class="portal-grid_content-2col">
-                    <div v-if="view.sectionReference == 'first-page'" class="section">
-                        <audio id='audio' src="./media/eligibility-adult-sc2.mp3"></audio>
-                        <h1>First Page</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>TWO</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>THREE</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>FOUR</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    </div>
-                    <div v-if="view.sectionReference == 'second-page'" class="section">
-                        <audio id='audio' src="./media/eligibility-adult-sc3.mp3"></audio>
-                        <h1>ONE</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>TWO</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>THREE</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        <h1>FOUR</h1>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    </div>
+                    <transition
+                        appear 
+                        mode="in-out"
+                        v-bind:css="false"
+                        v-on:enter="firstEnter"
+                        v-on:leave="firstLeave">
+                        <div v-if="view.sectionReference == 'first-page'" key="first-page" class="section">
+                            <audio id='audio' src="./media/eligibility-adult-sc2.mp3"></audio>
+                            <h1>OHIO</h1>
+                        </div>
+                        <div v-if="view.sectionReference == 'second-page'" key=second-page class="section">
+                            <h1>HIHO!</h1>
+                        </div>
+                    </transition>
                 </div>
     
             </div>
         </div>
         <script type="text/javascript" src="scripts/polyfills.js"></script>
-        <script type="text/javascript" src="scripts/three.js"></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/CSSRulePlugin.min.js"></script>
