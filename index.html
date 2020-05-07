@@ -11,134 +11,116 @@
     </head>
 
     <body>
+        
+        <noscript>
+            <div class="content is-large my-padding-2-top">
+                <h3 class="has-text-dark">It appears that Javascript is not enabled on your browser.</h3>
+                <p>This site uses scripts for the interactive quiz at the end and will not work without scripts.</p>
+            </div>
+        </noscript>
+
         <div id="vue-app">
-            <div class="portal-grid">
+            <!-- start vue-instance-wrapper -->
+            <div>
 
-                <div class="portal-grid__hero hero-grid">
-                    <h1 class="hero-grid__title text text_giant text_white">Child and Adult Care Food Program</h1>
-                    <h2 class="hero-grid__subtitle text text_larger text_white">Adult Eligibility Application Training</h2>
-                    <h2 class="hero-grid__ie-warning text text_small text_white">
-                        <strong>Internet Explorer detected.</strong>
-                        <br>For the best experience, please use a modern browser such as Edge, Chrome, or Firefox.
-                    </h2>
-                    <h3 @click="scrollTo()" id="hero-cta" class="hero-grid__cta text text_white text_uppercase text_link">scroll down</h3>
-                </div>
-
-                <side-menu 
-                    v-bind:passed-view='view' 
-                    v-bind:passed-template='template' 
-                    v-bind:passed-state='state' 
-                    v-on:emit-view="setView"
-                    v-on:emit-slider="setMediaOptions"
-                    v-on:emit-media-manager="manageMedia"
-                    id="side-menu"
-                    class="portal-grid__side-menu side-menu"
-                    inline-template>
-                    <div>
-
-                        <div class="side-menu__flex-header">
-                            <img 
-                                src="./media/cacfp-logo-nav-light.png"
-                                class="side-menu__logo-image"
-                                alt="cacfp logo">
-                            <p class="text text_light">Child and Adult Care Food Program</p>
+                <nav class="navbar" role="top navigation">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#" aria-label="return to beginning">
+                            <img src="./media/cacfp-logo-nav-light.png" width="78" height="70" alt="NC CACFP logo">
+                        </a>
+                        <div
+                            @click="sideMenuHandler('course', course, key)" 
+                            class="title is-size-7-mobile is-size-4 has-text-white navbar-item">
+                            Completing a Corrective Action Document
                         </div>
+                    </div>
+                    <div class="navbar-menu is-active">
+                        <div class="navbar-end is-flex">
+                            <a href="./media/transcript-print.pdf" target="_blank" aria-label="download PDF" class="navbar-item is-flex is-size-4">
+                                <img 
+                                    class="my-icon-medium"
+                                    src="./media/images/pdf.svg"
+                                    alt="image of a document">
+                                <p class="has-text-white">PDF</p>
+                            </a>
+                            <a href="./media/transcript-audio.mp3" target="_blank" aria-label="download MP3" class="navbar-item is-flex is-size-4">
+                                <img 
+                                    class="my-icon-medium"
+                                    src="./media/images/mp3.svg"
+                                    alt="image of a document">
+                                <p class="has-text-white">MP3</p>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
 
-                        <div class="side-menu_list side-menu_list-padded side-menu_bottom-bordered side-menu_top-bordered">
-                            <div v-for="(course, key) in passedTemplate">
-                                <h1 
-                                    @click="sideMenuHandler('course', course, key)" 
-                                    class="side-menu__course-link text text_large">
-                                    {{ course.courseName }}
-                                </h1>
-                                <div v-for="(module, key) in course.modulesArray">
-                                    <div v-if="module.moduleParentId == passedView.courseReference">
-                                        <div 
-                                            @click="sideMenuHandler('module', module, key)" 
-                                            class="side-menu__flex-item">
-                                            <img 
-                                                src="./media/chevron-down.svg"
-                                                v-bind:id="module.moduleId + 'Selector'"
-                                                class="side-menu__module-icon">
-                                            <h3 class="side-menu__module-link text text_medium text_link">
-                                                {{ module.moduleName }}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <div v-for="(section, key) in module.sectionsArray">
-                                        <div v-if="section.sectionParentId == passedView.moduleReference">
-                                            <div 
-                                                @click="sideMenuHandler('section', section, key)"
-                                                class="side-menu__flex-item">
-                                                <img 
-                                                    src="./media/dot.svg"
-                                                    v-bind:id="section.sectionId + 'Selector'"
-                                                    class="side-menu__section-icon"
-                                                >
-                                                <h4 class="side-menu__section-link text text_smaller text_link">
-                                                    {{ section.sectionName }}
-                                                </h4>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="columns is-marginless min-height-full">
+                    <main-content
+                        section-reference='content-one'
+                        audio-src="./media/audio/3.mp3" 
+                        v-bind:passed-state='state'>
+                        <div class="columns my-padding-2-top">   
+                            <div class="column is-7">
+                                <!-- make a named slot -->
+                                <div class="notification my-background-image">
+                                    <h1 class="title is-size-4-mobile is-size-1 has-text-white">Child and Adult Care Food Program</h1>
+                                    <h2 class="subtitle has-text-white">NC CACFP Nutrition Training and Policy Team</h2>
+                                </div>
+                                <div class="content is-large has-text-grey-dark">
+                                    <h1 >How to navigate this course</h1>
+                                    <p>
+                                        Use the <strong>menu</strong> on the right to navigate to the various sections of this training. 
+                                        The <strong>PRINT</strong> button along the top of your screen will download a text only transcript 
+                                        of this training. The <strong>LISTEN</strong> button along the top of your screen will download 
+                                        an audio only MP3 version of this training.
+                                    </p>
                                 </div>
                             </div>
+                            <div class="column is-offset-1">
+                                <!-- make a named slot -->
+                                <img class="box" src="#" alt="SUPER cool image">
+                            </div>
                         </div>
-
-                        <div class="side-menu__flex-header">
-                            <p class="text text_small slider-title">Read text pages</p> 
-                            <button @click="sliderHandler('audio')" class="slider">
-                                <div id='audio-slider-fill' class="slider__fill"></div>
-                                <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
-                                <div id='audio-slider-knob' class="slider__knob"></div>
-                            </button>
+                    </main-content>
+                    
+                    <side-menu 
+                        v-bind:passed-template='template' 
+                        v-bind:passed-state='state' 
+                        v-on:emit-state="setState"
+                        v-on:emit-slider="setMediaOptions"
+                        v-on:emit-media-manager="manageMedia"
+                        inline-template>
+                        <div class="column is-2 is-inline-block is-2 side-menu">
+                            <nav role="menu" class="menu" aria-label="section navigation">
+                                <div v-for="(label, key) in passedTemplate">
+                                    <p class="menu-label my-padding-2-top is-size-5">{{ label.labelName }}</p>
+                                    <ul v-for="(item, key) in label.items" class="menu-list" role="menu">
+                                        <li><a @click="sideMenuHandler(item.listId)" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                    </ul>
+                                </div>
+                                <div class="level is-flex my-padding-2-top top-bordered">
+                                    <span class="level-item my-pad-horizontal-1">Play Audio</span> 
+                                    <button @click="sliderHandler('audio')" class="slider level-item">
+                                        <div id='audio-slider-fill' class="slider__fill"></div>
+                                        <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
+                                        <div id='audio-slider-knob' class="slider__knob"></div>
+                                    </button>
+                                </div>
+                            </nav>
                         </div>
+                    </side-menu> 
+                </div>
 
+                <footer class="footer">
+                    <div class="content is-large has-text-centered">
+                      <p>
+                        <strong>North Carolina Child and Adult Care Food Program</strong>
+                        <br>Nutrition Training and Policy Team
+                      </p>
                     </div>
-                </side-menu>
+                </footer>
 
-                <div v-if="view.moduleReference == 'welcome'" class="portal-grid_content-3col">
-                    <transition
-                    appear 
-                    mode="in-out"
-                    v-bind:css="false"
-                    v-on:enter="firstEnter"
-                    v-on:leave="firstLeave">
-                        <div v-if="view.sectionReference == 'objectives'" key="objectives" class="section">
-                            <video id='video' controls>
-                                <source src="./media/video1.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div v-if="view.sectionReference == 'regulations'" key="regulations" class="section">
-                            <audio id='audio' src="./media/eligibility-adult-sc1.mp3"></audio>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                            <h1>TWO</h1>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                            <h1>THREE</h1>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                            <h1>FOUR</h1>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                        </div>
-                    </transition>
-                </div>
-
-                <div v-if="view.moduleReference == 'eligibility-application'" class="portal-grid_content-2col">
-                    <transition
-                        appear 
-                        mode="in-out"
-                        v-bind:css="false"
-                        v-on:enter="firstEnter"
-                        v-on:leave="firstLeave">
-                        <div v-if="view.sectionReference == 'first-page'" key="first-page" class="section">
-                            <audio id='audio' src="./media/eligibility-adult-sc2.mp3"></audio>
-                            <h1>OHIO</h1>
-                        </div>
-                        <div v-if="view.sectionReference == 'second-page'" key=second-page class="section">
-                            <h1>HIHO!</h1>
-                        </div>
-                    </transition>
-                </div>
-    
+            <!-- end vue-instance-wrapper -->
             </div>
         </div>
         <script type="text/javascript" src="scripts/polyfills.js"></script>

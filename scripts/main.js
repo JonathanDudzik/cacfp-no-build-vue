@@ -1,56 +1,109 @@
 'use strict';
 
+Vue.component("main-content", {
+    props: ['audioSrc', 'passedState', 'sectionReference'],
+    methods: {
+        firstEnter: function(el, done) {
+            gsap.fromTo (el, 0.5, {opacity: 0}, {opacity: 1})
+            done()
+        },
+        
+        firstLeave: function(el, done) {
+            gsap.to (el, 0.5, {opacity: 0})
+            done()
+        }
+    },
+    render: function(createElement) {
+        if(this.passedState.sectionReference == 'content-one') {
+            return createElement(
+                'div', 
+                {
+                    class: ['column', 'is-10']
+                },
+                [
+                    createElement(
+                        'transition',
+                        {
+                            props: {
+                                appear: true,
+                                css: false,
+                                mode: "in-out",
+                            },
+                            on: {
+                                enter: this.firstEnter,
+                                leave: this.firstLeave, 
+                            }
+                        },
+                        [
+                            createElement(
+                                'div', 
+                                {
+                                    // empty data object
+                                },
+                                [
+                                    createElement(
+                                        'audio',
+                                        {
+                                          attrs: {id: 'audio', src: this.audioSrc}
+                                        }
+                                    ),
+                                    this.$slots.default
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            )
+        } else {
+            return createElement(
+                'div', 
+                {
+                    class: ['column', 'is-10']
+                }
+            )
+        }
+    }
+    
+    // `<div class="column is-10">
+    //     <transition
+    //         appear 
+    //         mode="in-out"
+    //         v-bind:css="false"
+    //         v-on:enter="firstEnter"
+    //         v-on:leave="firstLeave">
+    //         <div v-if="passedState.sectionReference == 'content-one'">
+    //             <audio id='audio' src="audioSrc"></audio>
+    //             <p>{{ sectionReference }}</p>
+    //             <slot></slot>
+    //         </div>
+    //     </transition>
+    // </div>`
+})
+
 Vue.component("side-menu", {
-    props: ['passedView', 'passedTemplate', 'passedState'],
+    props: ['passedTemplate', 'passedState'],
     data: function() {
         return {
-            currentSectionSelector: null,
-            currentModuleSelector: null
+            currentSectionSelector: null
         }
     },
     methods: {
-        sideMenuHandler: function(type, template) {
-            
-            if(type == "course") {
-                this.$emit('emit-view', 'course', template.courseId)
-                this.$emit('emit-view', 'module', template.modulesArray[0].moduleId)
-                this.$emit('emit-view', 'section', template.modulesArray[0].sectionsArray[0].sectionId)
-            }
-            
-            if(type == "module") {
-                this.$emit('emit-view', 'module', template.moduleId)
-                this.$emit('emit-view', 'section', template.sectionsArray[0].sectionId)
-            }
-            
-            if(type == "section") {
-                this.$emit('emit-view', 'section', template.sectionId)
-            }
-            
+        sideMenuHandler: function(section) {
+            this.$emit('emit-state', section)
+
             this.$emit('emit-media-manager')
             
-            gsap.to(window, 1, {scrollTo:{y:"#side-menu", offsetY:15}})
-
-            this.moduleSelectorHandler()
-            
-            if(document.getElementById(this.passedView.sectionReference + 'Selector')) {
+            if(document.getElementById(this.passedState.sectionReference + 'Selector')) {
                 this.sectionSelectorHandler()
             }
         },
 
-        moduleSelectorHandler: function() {
-            if(this.currentModuleSelector) {
-                gsap.to(this.currentModuleSelector, 0.2, {rotate: 0})
-            }
-            this.currentModuleSelector = document.getElementById(this.passedView.moduleReference + 'Selector')
-            gsap.to(this.currentModuleSelector, 0.5, {rotate: -90})
-        },
-
         sectionSelectorHandler: function() {
             if(this.currentSectionSelector) {
-                gsap.to(this.currentSectionSelector, 0.2, {scale: 0, opacity: '0'})
+                gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
             }
-            this.currentSectionSelector = document.getElementById(this.passedView.sectionReference + 'Selector')
-            gsap.to(this.currentSectionSelector, 0.2, {scale: 1, opacity: '1'})
+            this.currentSectionSelector = document.getElementById(this.passedState.sectionReference + 'Selector')
+            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
         },
 
         sliderHandler: function(type) {
@@ -90,74 +143,57 @@ var vueRoot = new Vue({
     data: {
         state: {
             currentAudioObject: null,
-            audioPlaying: false
-        },
-        view: {
-            courseReference: "adult-eligibility-application", // resolves to courseId
-            moduleReference: null, // resolves to moduleId
-            sectionReference: null // resolves to sectionId
+            audioPlaying: false,
+            sectionReference: 'content-one' // resolves to sectionId
         },
         template: [
             {
-                courseName: "Adult Eligibility Application",
-                courseId: "adult-eligibility-application",
-                courseIndex: 100,
-                modulesArray: [
+                labelName: 'Content',
+                labelId: 'content',
+                items: [
                     {
-                        moduleName: "Welcome",
-                        moduleId: "welcome",
-                        moduleIndex: 110,
-                        moduleParentId: 'adult-eligibility-application',
-                        sectionsArray: [
-                            {
-                                sectionName: "Objectives",
-                                sectionId: "objectives",
-                                sectionIndex: 111,
-                                sectionParentId: 'welcome',
-                                sectionAudio: null
-                            },
-                            {
-                                sectionName: "Regulations",
-                                sectionId: "regulations",
-                                sectionIndex: 112,
-                                sectionParentId: 'welcome',
-                                sectionAudio: null
-                            }
-                        ]
+                        listName: 'content one',
+                        listId: 'content-one'
                     },
                     {
-                        moduleName: "Eligibility Application",
-                        moduleId: "eligibility-application",
-                        moduleIndex: 120,
-                        moduleParentId: 'adult-eligibility-application',
-                        sectionsArray: [
-                            {
-                                sectionName: "First Page",
-                                sectionId: "first-page",
-                                sectionIndex: 121,
-                                sectionParentId: 'eligibility-application',
-                                sectionAudio: null
-                            },
-                            {
-                                sectionName: "Second Page",
-                                sectionId: "second-page",
-                                sectionIndex: 122,
-                                sectionParentId: 'eligibility-application',
-                                sectionAudio: './media/eligibility-adult-sc2.mp3'
-                            }
-                        ]
+                        listName: 'content two',
+                        listId: 'content-two'
+                    }
+                ]
+            },
+            {
+                labelName: 'Files',
+                labelId: 'files',
+                items: [
+                    {
+                        listName: 'file one'
+                    },
+                    {
+                        listName: 'file two'
+                    }
+                ]
+            },
+            {
+                labelName: 'Links',
+                labelId: 'links',
+                items: [
+                    {
+                        listName: 'link one'
+                    },
+                    {
+                        listName: 'link two'
                     }
                 ]
             }
         ]
     },
     methods: {
-        setView: function(type, id) {
-            this.view[type + 'Reference'] = id
+        setState: function(section) {
+            this.state.sectionReference = section
         },
 
-        setMediaOptions: function(type) {
-            this.state[type + 'Playing'] = !this.state[type + 'Playing']
+        setMediaOptions: function() {
+            this.state.audioPlaying = !this.state.audioPlaying
         },
 
         manageMedia: function() {
@@ -176,31 +212,7 @@ var vueRoot = new Vue({
                 }
             }
             return
-        },
-
-        initAnim: function() {
-            // initial animation timeline on this component's mounted hook
-            TweenLite.defaultEase = Linear.easeNone
-            var timeline = new TimelineMax({repeat:-1, yoyo:true})
-            timeline.fromTo('#hero-cta', 0.5, {rotate: -1, scale: 0.99}, {rotate: 1, scale: 1.05})
-        },
-
-        scrollTo: function() {
-            gsap.to(window, {duration: 1, scrollTo: "#side-menu"})
-        },
-
-        firstEnter: function(el, done) {
-            gsap.fromTo (el, 0.5, {opacity: 0}, {opacity: 1})
-            done()
-        },
-        
-        firstLeave: function(el, done) {
-            gsap.to (el, 0.5, {opacity: 0})
-            done()
         }
-    },
-    mounted: function() {
-        return this.initAnim()
     },
     updated: function() { 
         return this.manageMedia()
