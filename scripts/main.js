@@ -1,97 +1,123 @@
 'use strict';
 
 Vue.component("main-content", {
-    props: ['audioSrc', 'passedState', 'sectionReference'],
-    methods: {
-        firstEnter: function(el, done) {
-            gsap.fromTo (el, 0.5, {opacity: 0}, {opacity: 1})
-            done()
-        },
-        
-        firstLeave: function(el, done) {
-            gsap.to (el, 0.5, {opacity: 0})
-            done()
+    props: ['audioSrc', 'passedState', 'col1Classes', 'col2Classes'],
+    data: function() {
+        return {
+            currentAudioObject: null,
         }
     },
-    render: function(createElement) {
-        if(this.passedState.sectionReference == 'content-one') {
-            return createElement(
-                'div', 
-                {
-                    class: ['column', 'is-10']
-                },
-                [
-                    createElement(
-                        'transition',
-                        {
-                            props: {
-                                appear: true,
-                                css: false,
-                                mode: "in-out",
-                            },
-                            on: {
-                                enter: this.firstEnter,
-                                leave: this.firstLeave, 
-                            }
-                        },
-                        [
-                            createElement(
-                                'div', 
-                                {
-                                    // empty data object
-                                },
-                                [
-                                    createElement(
-                                        'audio',
-                                        {
-                                          attrs: {id: 'audio', src: this.audioSrc}
-                                        }
-                                    ),
-                                    this.$slots.default
-                                ]
-                            )
-                        ]
-                    )
-                ]
-            )
-        } else {
-            return createElement(
-                'div', 
-                {
-                    class: ['column', 'is-10']
+    methods: {
+        manageMedia: function() {
+            console.log('managing Media!')
+            // manage pausing media
+            if(this.currentAudioObject) {
+                this.currentAudioObject.pause()
+                this.currentAudioObject = null
+            }
+            
+            // manage playing media
+            if(this.passedState.audioPlaying == true) {
+                if(document.getElementById('audio')) {
+                    var audio = document.getElementById('audio');
+                    console.log(audio)
+                    this.currentAudioObject = audio;
+                    this.currentAudioObject.play();
                 }
-            )
-        }
-    }
+            }
+            return
+        },
     
-    // `<div class="column is-10">
-    //     <transition
-    //         appear 
-    //         mode="in-out"
-    //         v-bind:css="false"
-    //         v-on:enter="firstEnter"
-    //         v-on:leave="firstLeave">
-    //         <div v-if="passedState.sectionReference == 'content-one'">
-    //             <audio id='audio' src="audioSrc"></audio>
-    //             <p>{{ sectionReference }}</p>
-    //             <slot></slot>
-    //         </div>
-    //     </transition>
-    // </div>`
+        firstEnter: function(el, done) {
+            console.log("enter")
+            gsap.fromTo(el, 0.3, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, onComplete: function(){done()}})
+        }
+    },
+    updated: function() { 
+        return this.manageMedia()
+    },
+    watch: {
+        // this watcher is for the slider event
+        'passedState.audioPlaying': {
+            handler: function() {
+                this.manageMedia()
+            }
+        }
+    },
+    render: function(createElement) {  
+        return createElement(
+            'div', 
+            {
+                class: ['column', 'is-10']
+            },
+            [
+                createElement(
+                    'transition',
+                    {
+                        props: {
+                            appear: true,
+                            css: false,
+                            mode: "in-out",
+                        },
+                        on: {
+                            enter: this.firstEnter 
+                        }
+                    },
+                    [
+                        createElement(
+                            'div', // transtion div wrapper
+                            [
+                                createElement(
+                                    'audio',
+                                    {
+                                        attrs: {id: 'audio', src: this.audioSrc}
+                                    }
+                                ),
+                                createElement(
+                                    'div',  // <div class="columns my-padding-2-top">  
+                                    {
+                                        class: ['columns', 'my-padding-2-top']
+                                    },
+                                    [
+                                        createElement(
+                                            'div', // <div class="column is-7">
+                                            {
+                                                class: this.col1Classes
+                                            },
+                                            [
+                                                createElement('h1', this.$slots.col1)
+                                            ]
+                                        ),
+                                        createElement(
+                                            'div', // <div class="column is-offset-1">
+                                            {
+                                                class: this.col2Classes
+                                            },
+                                            [
+                                                createElement('h1', this.$slots.col2)
+                                            ]
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    }
 })
 
 Vue.component("side-menu", {
     props: ['passedTemplate', 'passedState'],
     data: function() {
         return {
-            currentSectionSelector: null
+            currentSectionSelector: 'content-zeroSelector'
         }
     },
     methods: {
         sideMenuHandler: function(section) {
             this.$emit('emit-state', section)
-
-            this.$emit('emit-media-manager')
             
             if(document.getElementById(this.passedState.sectionReference + 'Selector')) {
                 this.sectionSelectorHandler()
@@ -132,6 +158,10 @@ Vue.component("side-menu", {
     },
     updated: function() {
         return this.sectionSelectorHandler()
+    },
+    mounted: function() {
+        this.currentSectionSelector = document.getElementById(this.passedState.sectionReference + 'Selector')
+        gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
     }
 });
 
@@ -142,7 +172,6 @@ var vueRoot = new Vue({
     el: "#vue-app",
     data: {
         state: {
-            currentAudioObject: null,
             audioPlaying: false,
             sectionReference: 'content-one' // resolves to sectionId
         },
@@ -152,12 +181,24 @@ var vueRoot = new Vue({
                 labelId: 'content',
                 items: [
                     {
-                        listName: 'content one',
+                        listName: 'Welcome',
                         listId: 'content-one'
                     },
                     {
-                        listName: 'content two',
+                        listName: 'How it works',
                         listId: 'content-two'
+                    },
+                    {
+                        listName: 'Process summary',
+                        listId: 'content-three'
+                    },
+                    {
+                        listName: 'Submitting',
+                        listId: 'content-four'
+                    },
+                    {
+                        listName: 'Message from the State agency',
+                        listId: 'content-five'
                     }
                 ]
             },
@@ -194,35 +235,6 @@ var vueRoot = new Vue({
 
         setMediaOptions: function() {
             this.state.audioPlaying = !this.state.audioPlaying
-        },
-
-        manageMedia: function() {
-            // manage pausing media
-            if(this.state.currentAudioObject) {
-                this.state.currentAudioObject.pause()
-                this.state.currentAudioObject = null
-            }
-            
-            // manage playing media
-            if(this.state.audioPlaying == true) {
-                if(document.getElementById('audio')) {
-                    var audio = document.getElementById('audio');
-                    this.state.currentAudioObject = audio;
-                    this.state.currentAudioObject.play();
-                }
-            }
-            return
-        }
-    },
-    updated: function() { 
-        return this.manageMedia()
-    },
-    watch: {
-        // this watcher is for the slider event
-        'state.audioPlaying': {
-            handler: function() {
-                this.manageMedia()
-            }
         }
     }
 });

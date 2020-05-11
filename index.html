@@ -41,46 +41,126 @@
                                     class="my-icon-medium"
                                     src="./media/images/pdf.svg"
                                     alt="image of a document">
-                                <p class="has-text-white">PDF</p>
+                                <p class="has-text-white is-block">Download PDF</p>
                             </a>
                             <a href="./media/transcript-audio.mp3" target="_blank" aria-label="download MP3" class="navbar-item is-flex is-size-4">
                                 <img 
                                     class="my-icon-medium"
                                     src="./media/images/mp3.svg"
                                     alt="image of a document">
-                                <p class="has-text-white">MP3</p>
+                                <p class="has-text-white">Download MP3</p>
                             </a>
                         </div>
                     </div>
                 </nav>
 
                 <div class="columns is-marginless min-height-full">
-                    <main-content
-                        section-reference='content-one'
-                        audio-src="./media/audio/3.mp3" 
-                        v-bind:passed-state='state'>
-                        <div class="columns my-padding-2-top">   
-                            <div class="column is-7">
-                                <!-- make a named slot -->
-                                <div class="notification my-background-image">
-                                    <h1 class="title is-size-4-mobile is-size-1 has-text-white">Child and Adult Care Food Program</h1>
-                                    <h2 class="subtitle has-text-white">NC CACFP Nutrition Training and Policy Team</h2>
-                                </div>
-                                <div class="content is-large has-text-grey-dark">
-                                    <h1 >How to navigate this course</h1>
-                                    <p>
-                                        Use the <strong>menu</strong> on the right to navigate to the various sections of this training. 
-                                        The <strong>PRINT</strong> button along the top of your screen will download a text only transcript 
-                                        of this training. The <strong>LISTEN</strong> button along the top of your screen will download 
-                                        an audio only MP3 version of this training.
-                                    </p>
-                                </div>
+
+                    <main-content                        
+                        audio-src="./media/audio/1.mp3"
+                        col1-classes="column is-8"
+                        col2-classes="column is-3" 
+                        v-bind:passed-state='state'
+                        v-if="state.sectionReference == 'content-one'"
+                        key="two">
+                        <template v-slot:col1>
+                            <audio id="audio" src="./media/audio/1.mp3"></audio>
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>Welcome</h1>
+                                <p>I am glad you were able to join me for this training. I am Jonathan Dudzik, and I am an Administrative Officer with the CACFP Nutrition Policy and Training Team. I will be your learning facilitator for this online training entitled: How to Complete a Corrective Action Document.</p>
+                                <p>Let’s get started!</p>
+                                <h1>Objectives</h1>
+                                <ol>
+                                    <li>Explain what a Corrective Action Document is;</li>
+                                    <li>State why a Corrective Action Document is necessary;</li>
+                                    <li>Identify components of a Corrective Action Document;</li>
+                                    <li>And answer key questions for completing a Corrective Action Document.</li>
+                                </ol>
+                                <h1>What is a Corrective Action Document</h1>
+                                <p>Well, a Corrective Action Document is a written document that explains how an institution will fully and permanently correct a program violation that comes out of a compliance finding.</p>
+                                <p>Institutions complete a Corrective Action Document because it is required by Federal Regulation 7 CFR 226.6 (c), and to describe how they will correct program violations.</p>
+                                <aside class="notification my-background-image ">
+                                    <div class="content is-medium has-text-white">
+                                        <h1>How to navigate this course</h1>
+                                        <p>Use the <strong>menu</strong> on the right to navigate to the various sections of this training.</p>
+                                        <p>The <strong>Download PDF</strong> button along the top of your screen will download a PDF version of this training.</p>
+                                        <p>The <strong>Download MP3</strong> button along the top of your screen will download an audio only MP3 version of this training.</p>
+                                        <p>The <strong>Play Audio</strong> button toggles the audio for this training on and off.</p>
+                                    </div>
+                                </aside>
                             </div>
-                            <div class="column is-offset-1">
-                                <!-- make a named slot -->
-                                <img class="box" src="#" alt="SUPER cool image">
-                            </div>
-                        </div>
+                        </template>
+                        <template v-slot:col2>
+                            <aside>
+                                <img src="./media/nc-logo.jpg" alt='The toggle button is in the menu'>
+                            </aside>
+                        </template>
+                    </main-content>
+                    
+                    <main-content                        
+                        audio-src="./media/audio/2.mp3"
+                        col1-classes="column is-7"
+                        col2-classes="column is-4" 
+                        v-bind:passed-state='state'
+                        v-if="state.sectionReference == 'content-two'"
+                        key="three">
+                        <template v-slot:col1>
+                            <h1>ONE</h1>
+                            <p></p>
+                            <ol>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ol>
+                        </template>
+                        <template v-slot:col2>
+                            <p>TWO</p>
+                        </template>
+                    </main-content>
+                    
+                    <main-content                        
+                        audio-src="./media/audio/3.mp3"
+                        col1-classes="column is-7"
+                        col2-classes="column is-4" 
+                        v-bind:passed-state='state'
+                        v-if="state.sectionReference == 'content-three'"
+                        key="four">
+                        <template v-slot:col1>
+                            <p>THREE</p>
+                        </template>
+                        <template v-slot:col2>
+                            <p>THREE</p>
+                        </template>
+                    </main-content>
+                    
+                    <main-content                        
+                        audio-src="./media/audio/4.mp3"
+                        col1-classes="column is-7"
+                        col2-classes="column is-4" 
+                        v-bind:passed-state='state'
+                        v-if="state.sectionReference == 'content-four'"
+                        key="five">
+                        <template v-slot:col1>
+                            <p>FOUR</p>
+                        </template>
+                        <template v-slot:col2>
+                            <p>FOUR</p>
+                        </template>
+                    </main-content>
+                    
+                    <main-content                        
+                        audio-src="./media/audio/5.mp3"
+                        col1-classes="column is-7"
+                        col2-classes="column is-4" 
+                        v-bind:passed-state='state'
+                        v-if="state.sectionReference == 'content-five'">
+                        <template v-slot:col1>
+                            <p>FIVE</p>
+                        </template>
+                        <template v-slot:col2>
+                            <p>FIVE</p>
+                        </template>
                     </main-content>
                     
                     <side-menu 
@@ -88,7 +168,7 @@
                         v-bind:passed-state='state' 
                         v-on:emit-state="setState"
                         v-on:emit-slider="setMediaOptions"
-                        v-on:emit-media-manager="manageMedia"
+                        
                         inline-template>
                         <div class="column is-2 is-inline-block is-2 side-menu">
                             <nav role="menu" class="menu" aria-label="section navigation">
