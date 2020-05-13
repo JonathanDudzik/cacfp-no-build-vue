@@ -5652,6 +5652,15 @@ START rules that will come AFTER Bulma's variables
   background-color: #397aac; 
 }
 
+.my-shadow-small {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.my-marg-vertical-1 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 /* my utility styles */
 .my-pad-vertical-1 {
   padding-top: 1.5rem;
@@ -5671,12 +5680,16 @@ START rules that will come AFTER Bulma's variables
   padding-top: 2rem; 
 }
 
+.my-padding-3-top {
+  padding-top: 5rem; 
+}
+
 .min-height-full {
   min-height: 90vh; 
 }
 
 .my-background-image {
-  background-image: url("../media/bg_poly-accent-blue.jpg"); 
+  background-image: url("../media//images/bg_poly-accent-blue.jpg"); 
 }
 
 .bottom-bordered {

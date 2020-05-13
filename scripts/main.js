@@ -9,7 +9,6 @@ Vue.component("main-content", {
     },
     methods: {
         manageMedia: function() {
-            console.log('managing Media!')
             // manage pausing media
             if(this.currentAudioObject) {
                 this.currentAudioObject.pause()
@@ -17,10 +16,9 @@ Vue.component("main-content", {
             }
             
             // manage playing media
-            if(this.passedState.audioPlaying == true) {
+            if(this.passedState == true) {
                 if(document.getElementById('audio')) {
                     var audio = document.getElementById('audio');
-                    console.log(audio)
                     this.currentAudioObject = audio;
                     this.currentAudioObject.play();
                 }
@@ -29,16 +27,16 @@ Vue.component("main-content", {
         },
     
         firstEnter: function(el, done) {
-            console.log("enter")
             gsap.fromTo(el, 0.3, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, onComplete: function(){done()}})
         }
     },
-    updated: function() { 
-        return this.manageMedia()
+    mounted() {
+        this.manageMedia()
     },
     watch: {
         // this watcher is for the slider event
-        'passedState.audioPlaying': {
+        passedState: {
+            deep: true,
             handler: function() {
                 this.manageMedia()
             }
@@ -67,12 +65,6 @@ Vue.component("main-content", {
                         createElement(
                             'div', // transtion div wrapper
                             [
-                                createElement(
-                                    'audio',
-                                    {
-                                        attrs: {id: 'audio', src: this.audioSrc}
-                                    }
-                                ),
                                 createElement(
                                     'div',  // <div class="columns my-padding-2-top">  
                                     {
@@ -109,7 +101,7 @@ Vue.component("main-content", {
 })
 
 Vue.component("side-menu", {
-    props: ['passedTemplate', 'passedState'],
+    props: ['passedContent', 'passedFiles', 'passedLinks', 'passedState'],
     data: function() {
         return {
             currentSectionSelector: 'content-zeroSelector'
@@ -175,7 +167,7 @@ var vueRoot = new Vue({
             audioPlaying: false,
             sectionReference: 'content-one' // resolves to sectionId
         },
-        template: [
+        content: [
             {
                 labelName: 'Content',
                 labelId: 'content',
@@ -185,44 +177,64 @@ var vueRoot = new Vue({
                         listId: 'content-one'
                     },
                     {
-                        listName: 'How it works',
+                        listName: 'How it Works',
                         listId: 'content-two'
                     },
                     {
-                        listName: 'Process summary',
+                        listName: 'Corrective Action Document',
                         listId: 'content-three'
                     },
                     {
-                        listName: 'Submitting',
+                        listName: 'Quick Review',
                         listId: 'content-four'
                     },
                     {
-                        listName: 'Message from the State agency',
+                        listName: 'Submission in NC CARES',
                         listId: 'content-five'
+                    },
+                    {
+                        listName: 'Addtional Points',
+                        listId: 'content-six'
+                    },
+                    {
+                        listName: 'Message from the State Agency',
+                        listId: 'content-seven'
                     }
                 ]
-            },
+            }
+        ],
+        files: [
             {
                 labelName: 'Files',
                 labelId: 'files',
                 items: [
                     {
-                        listName: 'file one'
+                        listName: '7 CFR PART 226.6',
+                        listId: 'content-seven',
+                        href: 'https://www.ecfr.gov/cgi-bin/text-idx?SID=9c3a6681dbf6aada3632967c4bfeb030&mc=true&node=pt7.4.226&rgn=div5#se7.4.226_16'
                     },
                     {
-                        listName: 'file two'
+                        listName: 'Corrective Action Document',
+                        listId: 'content-eight',
+                        href: 'https://www.nutritionnc.com/snp/pdf/cacfp/forms/CAD-Form-10-20.docx'
+                    },
+                    {
+                        listName: 'Corrective Action Document Checklist',
+                        listId: 'content-eight',
+                        href: 'https://www.nutritionnc.com/snp/pdf/cacfp/forms/CAD-InstitutionChecklist-1019.docx'
                     }
                 ]
-            },
+            }
+        ],
+        links: [
             {
                 labelName: 'Links',
                 labelId: 'links',
                 items: [
                     {
-                        listName: 'link one'
-                    },
-                    {
-                        listName: 'link two'
+                        listName: 'NC CACFP Home Page',
+                        listId: 'content-nine',
+                        href: 'https://www.nutritionnc.com/snp/index.htm'
                     }
                 ]
             }

@@ -25,25 +25,25 @@
 
                 <nav class="navbar" role="top navigation">
                     <div class="navbar-brand">
-                        <a class="navbar-item" href="#" aria-label="return to beginning">
-                            <img src="./media/cacfp-logo-nav-light.png" width="78" height="70" alt="NC CACFP logo">
+                        <a class="navbar-item" href="https://www.nutritionnc.com/snp/index.htm" target="_blank" aria-label="return to beginning">
+                            <img src="./media/images/cacfp-logo-nav-light.png" width="78" height="70" alt="NC CACFP logo">
                         </a>
                         <div
                             @click="sideMenuHandler('course', course, key)" 
-                            class="title is-size-7-mobile is-size-4 has-text-white navbar-item">
-                            Completing a Corrective Action Document
+                            class="title is-size-7-mobile is-size-5 has-text-white navbar-item">
+                            How to Complete a Corrective Action Document
                         </div>
                     </div>
                     <div class="navbar-menu is-active">
                         <div class="navbar-end is-flex">
-                            <a href="./media/transcript-print.pdf" target="_blank" aria-label="download PDF" class="navbar-item is-flex is-size-4">
+                            <a href="./media/transcript.pdf" target="_blank" aria-label="download PDF" class="navbar-item is-flex is-size-4">
                                 <img 
                                     class="my-icon-medium"
                                     src="./media/images/pdf.svg"
                                     alt="image of a document">
                                 <p class="has-text-white is-block">Download PDF</p>
                             </a>
-                            <a href="./media/transcript-audio.mp3" target="_blank" aria-label="download MP3" class="navbar-item is-flex is-size-4">
+                            <a href="./media/audio.mp3" target="_blank" aria-label="download MP3" class="navbar-item is-flex is-size-4">
                                 <img 
                                     class="my-icon-medium"
                                     src="./media/images/mp3.svg"
@@ -56,130 +56,348 @@
 
                 <div class="columns is-marginless min-height-full">
 
-                    <main-content                        
-                        audio-src="./media/audio/1.mp3"
-                        col1-classes="column is-8"
-                        col2-classes="column is-3" 
-                        v-bind:passed-state='state'
+                    <main-content
+                        col1-classes="column is-7"
+                        col2-classes="column is-4" 
+                        v-bind:passed-state='state.audioPlaying'
                         v-if="state.sectionReference == 'content-one'"
-                        key="two">
+                        key="one">
                         <template v-slot:col1>
                             <audio id="audio" src="./media/audio/1.mp3"></audio>
+                            
                             <div class="content is-medium has-text-grey-dark">
                                 <h1>Welcome</h1>
-                                <p>I am glad you were able to join me for this training. I am Jonathan Dudzik, and I am an Administrative Officer with the CACFP Nutrition Policy and Training Team. I will be your learning facilitator for this online training entitled: How to Complete a Corrective Action Document.</p>
-                                <p>Let’s get started!</p>
-                                <h1>Objectives</h1>
+                                <p>I am glad you were able to join me for today’s training. I am Jonathan Dudzik, and I am an Administrative Officer with the CACFP Nutrition Policy and Training Team. I will be your learning facilitator for today’s session entitled: How to Complete a Corrective Action Document.</p>
+                                <p>Let’s get started. </p>
+                                <h1>Learning Objectives</h1>
+                                <p>Let’s look at the learning outcomes of today’s training. By the end of this training you should be able to:</p>
                                 <ol>
-                                    <li>Explain what a Corrective Action Document is;</li>
-                                    <li>State why a Corrective Action Document is necessary;</li>
-                                    <li>Identify components of a Corrective Action Document;</li>
-                                    <li>And answer key questions for completing a Corrective Action Document.</li>
+                                    <li>Explain what a Corrective Action Document is</li>
+                                    <li>State why a Corrective Action Document is necessary</li>
+                                    <li>Identify components of a Corrective Action Document</li>
+                                    <li>And answer key questions for completing a Corrective Action Document</li>
                                 </ol>
-                                <h1>What is a Corrective Action Document</h1>
+                                <h1>What is a Corrective Action Document?</h1>
                                 <p>Well, a Corrective Action Document is a written document that explains how an institution will fully and permanently correct a program violation that comes out of a compliance finding.</p>
-                                <p>Institutions complete a Corrective Action Document because it is required by Federal Regulation 7 CFR 226.6 (c), and to describe how they will correct program violations.</p>
-                                <aside class="notification my-background-image ">
-                                    <div class="content is-medium has-text-white">
-                                        <h1>How to navigate this course</h1>
-                                        <p>Use the <strong>menu</strong> on the right to navigate to the various sections of this training.</p>
-                                        <p>The <strong>Download PDF</strong> button along the top of your screen will download a PDF version of this training.</p>
-                                        <p>The <strong>Download MP3</strong> button along the top of your screen will download an audio only MP3 version of this training.</p>
-                                        <p>The <strong>Play Audio</strong> button toggles the audio for this training on and off.</p>
-                                    </div>
-                                </aside>
+                                <h1>Why Complete a Corrective Action Document?</h1>
+                                <p>Institutions complete a Corrective Action Document because:</p> 
+                                <ul>
+                                    <li>It is required by Federal Regulation -7 CFR 226.6 (c)</li>
+                                    <li>And to describe how they will correct program violations</li>
+                                </ul>
                             </div>
                         </template>
                         <template v-slot:col2>
-                            <aside>
-                                <img src="./media/nc-logo.jpg" alt='The toggle button is in the menu'>
+                            <aside class="box">
+                                <div class="content is-medium">
+                                    <h1>How to navigate this course</h1>
+                                    <p>Use the <strong>menu</strong> on the right to navigate to the various sections of this training.</p>
+                                    <p>The <strong>Play Audio</strong> button at the bottom of the menu toggles the audio for this training on and off.</p>
+                                    <p>The <strong>Download PDF</strong> button along the top of your screen will download a PDF version of this training.</p>
+                                    <p>The <strong>Download MP3</strong> button along the top of your screen will download an audio only MP3 version of this training.</p>
+                                </div>
+                                <figure class="image my-padding-2-top" >
+                                    <img src="./media/images/nc-logo.jpg" alt='State Seal'>
+                                </figure>
                             </aside>
                         </template>
                     </main-content>
                     
-                    <main-content                        
-                        audio-src="./media/audio/2.mp3"
-                        col1-classes="column is-7"
-                        col2-classes="column is-4" 
-                        v-bind:passed-state='state'
+                    <main-content
+                        col1-classes="column is-6"
+                        col2-classes="column is-6" 
+                        v-bind:passed-state='state.audioPlaying'
                         v-if="state.sectionReference == 'content-two'"
+                        key="two">
+                        <template v-slot:col1>
+                            <audio id="audio" src="./media/audio/2.mp3"></audio>
+
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>How it Works!</h1>
+                                <p>The process involves 4 steps:</p>
+                                <ol>
+                                    <li>A compliance review is conducted.</li>
+                                    <li>When Program Violation(s) are discovered</li>
+                                    <li>The institution is required to complete a Corrective Action Document to correct the program violation or violations</li>
+                                    <li>State agency reviews the Corrective Action Document and approves it or sends it back to the institution for revisions</li>
+                                </ol>
+                                <p>Remember, institutions are required to submit a separate Corrective Action Document for each program violation/finding.</p>
+                                <h1>Examples of Program Violations</h1>
+                                <p>Here are three examples of program violations. How many Corrective Action Documents would be needed given these examples?...</p>
+                                <ol>
+                                    <li>Failure to complete participant enrollment forms</li>
+                                    <li>Incomplete Income Eligibility Applications</li>
+                                    <li>Unauthorized personnel have access to confidential program participant information</li>
+                                </ol>
+                                <!-- This should be a mini activity -->
+                                <p>The answer is three – one for each program violation.</p>
+                                <h1>Supporting Documentation</h1>
+                                <p>Supporting documentation must be submitted with the Corrective Action Document. Take a moment to look over these examples:</p>
+                                <ul>
+                                    <li>Eligibility applications</li>
+                                    <li>Enrollment documentation</li>
+                                    <li>Staff training documentation</li>
+                                    <li>Site monitoring reports</li>
+                                    <li>Attendance records</li>
+                                    <li>Menus</li>
+                                    <li>Meal count forms</li>
+                                    <li>Child Nutrition Labels</li>
+                                    <li>Itemized food recipes</li>
+                                </ul>
+                                <h1>Corrective Action Document: Institution Information</h1>
+                                <p>The next section of the Corrective Action Document asks for institution information including:</p>
+                                <ol>
+                                    <li>The name of the institution</li>
+                                    <li>The institution’s agreement number</li>
+                                    <li>The full name of the Responsible principal (for example, the owner or Executive Director)</li>
+                                    <li>The responsible principal’s date of birth</li>
+                                    <li>The institution’s mailing and street address. If they are the same, you can write “same” under the street address</li>
+                                    <li>And the county of the institution</li>
+                                </ol>
+                                <p>Under the Institution Information section, you will be asked to Restate the program violation: You can obtain this information from the Compliance Review form. List one (1) program violation per form.</p>
+                            </div>
+                        </template>
+                        <template v-slot:col2>
+                            <aside>
+                                <figure class="image my-padding-2-top">
+                                    <img src="./media/images/process-diagram.png" alt="how it works diagram">
+                                </figure>
+                            </aside>
+                        </template>
+                    </main-content>
+                    
+                    <main-content
+                        col1-classes="column is-5"
+                        col2-classes="column is-7" 
+                        v-bind:passed-state='state.audioPlaying'
+                        v-if="state.sectionReference == 'content-three'"
                         key="three">
                         <template v-slot:col1>
-                            <h1>ONE</h1>
-                            <p></p>
-                            <ol>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ol>
+                            <audio id="audio" src="./media/audio/3.mp3"></audio>
+                            
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>Five Key Questions</h1>
+                                <p>Next the Corrective Action Document asks you to answer 5 key questions:</p>
+                                <ol>
+                                    <li>Who will address the program violation?</li>
+                                    <li>What are the procedures for correcting the program violation(s)?</li>
+                                    <li>When will the procedures be implemented?</li>
+                                    <li>Where will the document be retained?</li>
+                                    <li>How will staff be informed about the new policies and procedures?</li>
+                                </ol>
+                                <h1><u>Who</u> will Address the Program Violation?</h1>
+                                <p>Answer the first question by identifying who will address the program violation. Be sure to list all personnel responsible for this task and their titles.</p>
+                                <h1><u>What</u> are the Procedures that will be Implemented?</h1>
+                                <p>The second question states, “What are the procedures that will be implemented to address the program violation?” 
+                                    This can be answered by listing the program violation found in the compliance review form. List only one program violation per form. 
+                                    Be sure to provide a detailed description, that is, a step-by-step procedure and the actions that will be taken to correct the program violation.
+                                </p>
+                                <h1><u>When</u> will the Procedure be Implemented?</h1>
+                                <p>Next provide a timeline for implementing procedures for fully and permanently correcting the program violation. 
+                                    Use the implementation date and then explain how often the procedure will be done (for example, daily, weekly, or monthly).
+                                </p>
+                                <h1><u>Where</u> will the Corrective Action Documents be Retained?</h1>
+                                <p>Here is what the “where?” section of the Corrective Action Document looks like. It is a best practice to keep program documentation filed in a secure area and locked.</p>
+                                <h1><u>How</u> will Staff and Facilities be Informed?</h1>
+                                <p>The “How” section of the Corrective Action Document requires you to explain how staff and facilities will be informed about the new policies and procedures 
+                                    for fully and permanently correcting program violations. You can use one or more ways to inform staff of new policies and procedures for correcting 
+                                    a violation. For example, handbooks, training sessions, or websites. 
+                                </p>
+                            </div>
                         </template>
                         <template v-slot:col2>
-                            <p>TWO</p>
+                            <aside class="notification my-background-image">
+                                <div class="content is-medium has-text-white my-pad-vertical-1">
+                                    <h1>Corrective Action Document</h1>
+                                    <p>Please have a copy of the <a href="https://www.nutritionnc.com/snp/pdf/cacfp/forms/CAD-Form-10-20.docx">Corrective Action Document form</a> ready because I will be referring to this form a we go through the remainder of this training.</p>
+                                    <p>Below is an image of what the Corrective Action Document looks like.</p>
+                                </div>
+                            </aside>
+                            <figure class="image my-padding-3-top">
+                                <img src="./media/images/cad.png" alt="corrective action document screenshot" class="my-shadow-small">
+                            </figure>
                         </template>
                     </main-content>
                     
-                    <main-content                        
-                        audio-src="./media/audio/3.mp3"
-                        col1-classes="column is-7"
-                        col2-classes="column is-4" 
-                        v-bind:passed-state='state'
-                        v-if="state.sectionReference == 'content-three'"
+                    <main-content
+                        col1-classes="column is-6"
+                        col2-classes="column is-5" 
+                        v-bind:passed-state='state.audioPlaying'
+                        v-if="state.sectionReference == 'content-four'"
                         key="four">
                         <template v-slot:col1>
-                            <p>THREE</p>
+                            
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>Quick Review</h1>
+                                <p>Let’s do a quick review of what we covered in this training. When submitting a Correct Action Document remember to</p>
+                                <ol>
+                                    <li>Fill out all sections completely</li>
+                                    <li>Submit supporting documentation to verify procedures have been implemented and the program violation has been corrected</li>
+                                    <li>Answer 5 key questions (what, who, when, where, how)</li>
+                                    <li>Use step-by-step procedures to show how you will correct the program violation</li>
+                                    <li>And have an authorized representative sign and date the form</li>
+                                </ol>
+                            </div>
                         </template>
                         <template v-slot:col2>
-                            <p>THREE</p>
+                            <aside class="notification my-background-image">
+                                <div class="content is-medium has-text-white">
+                                    <h1>Authorized Signature</h1>
+                                    <p>Make sure your Corrective Action Document has the printed name of responsible principals and their signatures.</p>
+                                </div>
+                            </aside>
+                            <figure class="image my-padding-2-top">
+                                <img src="./media/images/sign-paper.png" alt="picture of a signature">
+                            </figure>
                         </template>
                     </main-content>
-                    
-                    <main-content                        
-                        audio-src="./media/audio/4.mp3"
-                        col1-classes="column is-7"
-                        col2-classes="column is-4" 
-                        v-bind:passed-state='state'
-                        v-if="state.sectionReference == 'content-four'"
+
+                    <main-content
+                        col1-classes="column is-11"
+                        col2-classes="column is-1" 
+                        v-bind:passed-state='state.audioPlaying'
+                        v-if="state.sectionReference == 'content-five'"
                         key="five">
                         <template v-slot:col1>
-                            <p>FOUR</p>
+                            
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>Submitting a Corrective Action Document in NC CARES</h1>
+                                <p>Now we will look at the steps for submitting the Corrective Action Document on NC CARES.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-1.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>Logging into NC CARES is the first step. Once logged in, clicking on the Compliance tab along the top of the screen should bring you to a page that looks like this.</p>
+                                <p>Clicking on Details under the Actions column will take you to the review dashboard where you can find general information about your Compliance Review.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-2.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>Once on the Review Dashboard, you will see a box that is titled, “Review Tools”. Within that box you can View or Modify your Corrective Action Document.</p>
+                                <p>Click on Modify in order to add attachments or notes to each Corrective Action Document that is required as a result of the Review. Remember, you may have multiple violations that require documents. Each Corrective Action Document will be listed separately on the next page.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-3.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>The next page is the Findings page. Once there you will see each Corrective Action Document listed separately in the Institution Findings box.</p>
+                                <p>In this example, there is only one Corrective Action Document, but the findings of a review could result in more than one being required.</p>
+                                <p>On the screen, locate the specific Corrective Action Document that you want to work on, and click Modify.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-4.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>Your Findings Details page should look similar to this. Scroll down until you find the Document Attachments Section. Next, click on Add an Attachment.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-4.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>You should see this Upload box appear. Use the Comment text box to briefly explain what the document is and if it is a new revision or version of a document that was previously attached.</p>
+                                <p>Click the Browse button to find the file on your computer’s hard drive.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-5.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>Once you have located the file using the navigation window, shown here, click Open.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-5.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>You should see now see your file referenced in the location bar. To finish uploading the file, you must click on the Upload button.</p>
+                                <figure class="image">
+                                    <img src="./media/images/submission-5.png" alt="screenshot of NC CARES">
+                                </figure>
+                                <p>After uploading the file, you will be directed back to the Findings Details page. Scroll down to the bottom of the screen and first verify that your file attached correctly by seeing it in the Document Attachments section.</p>
+                                <p>Finally, make sure you click the save button at the bottom of the page.</p>
+                            </div>      
                         </template>
                         <template v-slot:col2>
-                            <p>FOUR</p>
                         </template>
                     </main-content>
                     
-                    <main-content                        
-                        audio-src="./media/audio/5.mp3"
-                        col1-classes="column is-7"
-                        col2-classes="column is-4" 
-                        v-bind:passed-state='state'
-                        v-if="state.sectionReference == 'content-five'">
+                    <main-content
+                        col1-classes="column is-10"
+                        col2-classes="column is-2" 
+                        v-bind:passed-state='state.audioPlaying'
+                        v-if="state.sectionReference == 'content-six'"
+                        key="six">
                         <template v-slot:col1>
-                            <p>FIVE</p>
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>Additional points</h1>
+                                <p>Here are some additional points to keep in mind:</p>
+                                <ul>
+                                    <li>Remember to attach your supporting documentation the same way that you attached the Corrective Action Document form</li>
+                                    <li>Instead of attaching the Corrective Action Document form, you can type your step-by-step procedures for correcting the program violation in the Institution Corrective Action Response box</li>
+                                    <li>However, if using the Response box to submit your Corrective Action Document, you must include all the information that is included in the Corrective Action Document form</li>
+                                </ul>
+                                <figure class="image my-padding-2-top">
+                                    <figcaption>This is what the response box looks like in NC CARES</figcaption>
+                                    <img src="./media/images/response-box.png" alt="screenshot of NC CARES response box">
+                                </figure>
+                            </div>
                         </template>
                         <template v-slot:col2>
-                            <p>FIVE</p>
+                        </template>
+                    </main-content>
+
+                    <main-content
+                        col1-classes="column is-10"
+                        col2-classes="column is-2" 
+                        v-bind:passed-state='state.audioPlaying'
+                        v-if="state.sectionReference == 'content-seven'"
+                        key="seven">
+                        <template v-slot:col1>
+                            
+                            <div class="content is-medium has-text-grey-dark">
+                                <h1>CFDA and the Federal Awarding Agency</h1>
+                                <p>The state agency is required in trainings to always inform institutions of the Federal award information, including the Catalog of Federal Domestic Assistance (CFDA) title and number, and the Federal awarding agency.</p>
+                                <ol>
+                                    <li>The CFDA Title is Child and Adult Care Food Program.</li>
+                                    <li>The CFDA Number for CACFP is 10.558. This is an identifying number that a federal program is assigned in the Catalog of Federal Domestic Assistance.</li>
+                                    <li>The Federal awarding agency is United States Department of Agriculture, Food and Nutrition Service.</li>
+                                    <li>lf you are audited, the auditor may ask for this information.</li>
+                                </ol>
+                                <p>Please keep this information on file.</p>
+                                <h1>The Non-Discrimination Statement</h1>
+                                <p>A friendly reminder that administrators and institutions participating in USDA programs are prohibited from discriminating based on race, color, national origin, sex, disability, age, or reprisal or retaliation for prior civil rights activities in any program or activity conducted or funded by USDA.</p>
+                                <p>The Child and Adult Care Food Program Agreement for Institutions states that no person shall be excluded from participation in, be denied benefits of, or otherwise subject to discrimination under the Child and Adult Care Food Program receiving financial assistance from USDA.</p>
+                                <h1>Penalties for fraud</h1>
+                                <!-- this paragraph needs re-worded -->
+                                <p>The Penalties for Fraud statement explains the consequences for committing fraud against this federally-funded program. As you can see, penalties may include a fine, imprisonment or both.</p>
+                                <div class="box is-medium">
+                                    <p>“Whoever embezzles, willfully misapplies, steals, or obtains by fraud any funds, assets, or property that are the subject of a grant or other form of assistance, whether received directly or indirectly from USDA, or whoever receives, conceals, or retains such funds, assets, or property to personal use or gain, knowing such funds, assets, or property have been embezzled,  willfully misapplied, stolen, or obtained by fraud shall, if such funds, assets, or property are of the value of $100 or more, be fined not more than $10,000 or imprisoned not more than five years, or both, or, if such funds, assets, or property are of a value of less than $100, shall be fined not more than $1,000 or imprisoned for not more than one year, or both.”</p>
+                                </div>
+                                <h1>Contact information</h1>
+                                <!-- the link is needs to be made more accessible on hover -->
+                                <p>Questions? Contact your NC CACFP Training Team at <a href="mailto:CACFPtraining@dhhs.nc.gov">CACFPtraining@dhhs.nc.gov</a></p>
+                            </div>
+                        </template>
+                        <template v-slot:col2>
                         </template>
                     </main-content>
                     
                     <side-menu 
-                        v-bind:passed-template='template' 
-                        v-bind:passed-state='state' 
+                        v-bind:passed-content='content' 
+                        v-bind:passed-files='files' 
+                        v-bind:passed-links='links' 
+                        v-bind:passed-state='state'
                         v-on:emit-state="setState"
                         v-on:emit-slider="setMediaOptions"
-                        
                         inline-template>
-                        <div class="column is-2 is-inline-block is-2 side-menu">
+                        <div class="column is-2 is-inline-block side-menu">
                             <nav role="menu" class="menu" aria-label="section navigation">
-                                <div v-for="(label, key) in passedTemplate">
-                                    <p class="menu-label my-padding-2-top is-size-5">{{ label.labelName }}</p>
-                                    <ul v-for="(item, key) in label.items" class="menu-list" role="menu">
+                                <div v-for="(content, key) in passedContent">
+                                    <p class="menu-label my-padding-2-top is-size-5">{{ content.labelName }}</p>
+                                    <ul v-for="(item, key) in content.items" class="menu-list" role="menu">
                                         <li><a @click="sideMenuHandler(item.listId)" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
                                     </ul>
                                 </div>
+                                <div v-for="(file, key) in passedFiles">
+                                    <p class="menu-label my-padding-2-top is-size-5">{{ file.labelName }}</p>
+                                    <ul v-for="(item, key) in file.items" class="menu-list" role="menu">
+                                        <li><a v-bind:href="item.href" target="_blank" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                    </ul>
+                                </div>
+                                <div v-for="(link, key) in passedLinks">
+                                    <p class="menu-label my-padding-2-top is-size-5">{{ link.labelName }}</p>
+                                    <ul v-for="(item, key) in link.items" class="menu-list" role="menu">
+                                        <li><a v-bind:href="item.href" target="_blank" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                    </ul>
+                                </div>
                                 <div class="level is-flex my-padding-2-top top-bordered">
-                                    <span class="level-item my-pad-horizontal-1">Play Audio</span> 
+                                    <span class="level-item my-pad-horizontal-1">Play Audio</span>
                                     <button @click="sliderHandler('audio')" class="slider level-item">
                                         <div id='audio-slider-fill' class="slider__fill"></div>
                                         <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
