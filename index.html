@@ -88,8 +88,8 @@
                             </div>
                         </template>
                         <template v-slot:col2>
-                            <aside class="box">
-                                <div class="content is-medium">
+                            <aside>
+                                <div class="content is-medium box">
                                     <h1>How to navigate this course</h1>
                                     <p>Use the <strong>menu</strong> on the right to navigate to the various sections of this training.</p>
                                     <p>The <strong>Play Audio</strong> button at the bottom of the menu toggles the audio for this training on and off.</p>
@@ -123,14 +123,25 @@
                                 </ol>
                                 <p>Remember, institutions are required to submit a separate Corrective Action Document for each program violation/finding.</p>
                                 <h1>Examples of Program Violations</h1>
-                                <p>Here are three examples of program violations. How many Corrective Action Documents would be needed given these examples?...</p>
+                                <p>Here are three examples of program violations:</p>
                                 <ol>
                                     <li>Failure to complete participant enrollment forms</li>
                                     <li>Incomplete Income Eligibility Applications</li>
                                     <li>Unauthorized personnel have access to confidential program participant information</li>
                                 </ol>
-                                <!-- This should be a mini activity -->
-                                <p>The answer is three – one for each program violation.</p>
+                                <p>Given these examples, how many Corrective Action Documents would be needed?</p>
+                                <point-manager 
+                                    v-on:emit-point="addPoint"
+                                    v-on:emit-modal-state="setModalState"
+                                    v-on:emit-modal-content="setModalContent"
+                                >
+                                    <p slot-scope="{ selectionHandler }">
+                                        <button class="button is-large" @click="selectionHandler(0, 'Sorry WRONG!')">1</button>
+                                        <button class="button is-large" @click.once="selectionHandler(10, 'GREAT JOB!')">3</button>
+                                        <button class="button is-large" @click="selectionHandler(0, 'Sorry WRONG!')">6</button>
+                                        <p>The answer is three – one for each program violation.</p>
+                                    </p>
+                                </point-manager>
                                 <h1>Supporting Documentation</h1>
                                 <p>Supporting documentation must be submitted with the Corrective Action Document. Take a moment to look over these examples:</p>
                                 <ul>
@@ -354,7 +365,6 @@
                                 <p>A friendly reminder that administrators and institutions participating in USDA programs are prohibited from discriminating based on race, color, national origin, sex, disability, age, or reprisal or retaliation for prior civil rights activities in any program or activity conducted or funded by USDA.</p>
                                 <p>The Child and Adult Care Food Program Agreement for Institutions states that no person shall be excluded from participation in, be denied benefits of, or otherwise subject to discrimination under the Child and Adult Care Food Program receiving financial assistance from USDA.</p>
                                 <h1>Penalties for fraud</h1>
-                                <!-- this paragraph needs re-worded -->
                                 <p>The Penalties for Fraud statement explains the consequences for committing fraud against this federally-funded program. As you can see, penalties may include a fine, imprisonment or both.</p>
                                 <div class="box is-medium">
                                     <p>“Whoever embezzles, willfully misapplies, steals, or obtains by fraud any funds, assets, or property that are the subject of a grant or other form of assistance, whether received directly or indirectly from USDA, or whoever receives, conceals, or retains such funds, assets, or property to personal use or gain, knowing such funds, assets, or property have been embezzled,  willfully misapplied, stolen, or obtained by fraud shall, if such funds, assets, or property are of the value of $100 or more, be fined not more than $10,000 or imprisoned not more than five years, or both, or, if such funds, assets, or property are of a value of less than $100, shall be fined not more than $1,000 or imprisoned for not more than one year, or both.”</p>
@@ -381,22 +391,22 @@
                                 <div v-for="(content, key) in passedContent">
                                     <p class="menu-label my-padding-2-top is-size-5">{{ content.labelName }}</p>
                                     <ul v-for="(item, key) in content.items" class="menu-list" role="menu">
-                                        <li><a @click="sideMenuHandler(item.listId)" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                        <li><a @click="sideMenuHandler(item.listId)" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>
                                     </ul>
                                 </div>
                                 <div v-for="(file, key) in passedFiles">
                                     <p class="menu-label my-padding-2-top is-size-5">{{ file.labelName }}</p>
                                     <ul v-for="(item, key) in file.items" class="menu-list" role="menu">
-                                        <li><a v-bind:href="item.href" target="_blank" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                        <li><a v-bind:href="item.href" target="_blank" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>
                                     </ul>
                                 </div>
                                 <div v-for="(link, key) in passedLinks">
                                     <p class="menu-label my-padding-2-top is-size-5">{{ link.labelName }}</p>
                                     <ul v-for="(item, key) in link.items" class="menu-list" role="menu">
-                                        <li><a v-bind:href="item.href" target="_blank" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>  <!-- class="is-active" -->
+                                        <li><a v-bind:href="item.href" target="_blank" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>
                                     </ul>
                                 </div>
-                                <div class="level is-flex my-padding-2-top top-bordered">
+                                <div class="level is-flex my-padding-2-top my-marg-vertical-1 top-bordered">
                                     <span class="level-item my-pad-horizontal-1">Play Audio</span>
                                     <button @click="sliderHandler('audio')" class="slider level-item">
                                         <div id='audio-slider-fill' class="slider__fill"></div>
@@ -408,6 +418,37 @@
                         </div>
                     </side-menu> 
                 </div>
+
+                <lateral-navigator
+                    v-bind:passed-content="content"
+                    v-bind:passed-section-ref="state.sectionReference"
+                    v-on:emit-navigate-next="setState"
+                    v-on:emit-navigate-next="setState"
+                    inline-template
+                >
+                    <button  
+                        v-if="this.nextModuleId" 
+                        @click="navigateNext()"
+                        class="button is-large"
+                    >
+                        Continue to next section
+                    </button>
+                </lateral-navigator>
+                    
+                <content-modal 
+                    v-bind:passed-modal-content="state.modalContent"
+                    v-bind:passed-show-modal="state.showModal"
+                    v-on:emit-close="setModalState"
+                    inline-template
+                >
+                    <div v-bind:class="{ 'is-active': isActive }" class="modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <p>{{ modalContent }}</p>
+                        </div>
+                        <button @click="closeModal()" class="button is-large my-modal-btn" aria-label="close">CLOSE</button>
+                    </div>
+                </content-modal>
 
                 <footer class="footer">
                     <div class="content is-large has-text-centered">

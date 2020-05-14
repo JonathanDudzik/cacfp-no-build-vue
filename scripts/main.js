@@ -1,5 +1,41 @@
 'use strict';
 
+Vue.component("content-modal", {
+    props: ['passedModalContent', 'passedShowModal'],
+    // why wasn't data() reactive?
+    computed: {
+        isActive () {
+            return this.passedShowModal
+        },
+
+        modalContent () {
+            // add logic here to append a message if the certificate is avail
+            return this.passedModalContent
+        }
+    },
+    methods: {
+        closeModal: function () {
+            this.$emit('emit-close')
+        }
+    }
+})
+
+Vue.component("point-manager", {
+    methods: {
+        selectionHandler(number, content) {
+            this.$emit('emit-point', number)
+            this.$emit('emit-modal-state')
+            this.$emit('emit-modal-content', content)
+        }
+    },
+    render() {
+        return this.$scopedSlots.default({
+            selectionHandler: this.selectionHandler
+            // incorrect: this.incorrectHandler
+        })
+    }
+})
+
 Vue.component("main-content", {
     props: ['audioSrc', 'passedState', 'col1Classes', 'col2Classes'],
     data: function() {
@@ -102,9 +138,15 @@ Vue.component("main-content", {
 
 Vue.component("side-menu", {
     props: ['passedContent', 'passedFiles', 'passedLinks', 'passedState'],
-    data: function() {
-        return {
-            currentSectionSelector: 'content-zeroSelector'
+    // data: function() {
+    //     return {
+    //         currentSectionSelector: 'content-oneSelector'
+    //     }
+    // },
+    computed: {
+        currentSection() {
+            console.log(this.passedState.sectionReference)
+            return this.passedState.sectionReference
         }
     },
     methods: {
@@ -117,9 +159,8 @@ Vue.component("side-menu", {
         },
 
         sectionSelectorHandler: function() {
-            if(this.currentSectionSelector) {
-                gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
-            }
+            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
+            
             this.currentSectionSelector = document.getElementById(this.passedState.sectionReference + 'Selector')
             gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
         },
@@ -157,16 +198,48 @@ Vue.component("side-menu", {
     }
 });
 
+Vue.component("lateral-navigator", {
+    props: ['passedContent', 'passedSectionRef'],
+    methods: {
+        navigateNext() {
+            this.$emit('emit-navigate-next', this.nextModuleId)
+            
+            this.currentSectionSelector = document.getElementById(this.passedSectionRef + 'Selector')
+            // this.$emit('emit-state', currentSectionSelector)
+            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
+
+            gsap.to(window, {duration: 0.5, scrollTo: 0})
+        }
+    },
+    computed: {
+        // should these be named "modules?"
+        currentModuleIndex: function () {
+            var modulefilter = this.passedSectionRef
+            return this.passedContent[0].items.findIndex(k => k.listId == modulefilter)
+        },
+
+        nextModuleId: function() {
+            var nextModuleIndex = this.currentModuleIndex + 1
+            
+            if(this.passedContent[0].items[nextModuleIndex]) {
+                return this.passedContent[0].items[nextModuleIndex].listId
+            }
+        }
+    },
+    updated: function() {
+        this.currentSectionSelector = document.getElementById(this.passedSectionRef + 'Selector')
+        console.log(this.currentSectionSelector)
+        gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
+    }
+})
+
 /***************************************************
  * Main Vue Instance (must be below all other code)
  ***************************************************/
 var vueRoot = new Vue({
     el: "#vue-app",
     data: {
-        state: {
-            audioPlaying: false,
-            sectionReference: 'content-one' // resolves to sectionId
-        },
+        // I don't think content, files, or links need to be arrays (can they just be objects?)
         content: [
             {
                 labelName: 'Content',
@@ -203,29 +276,26 @@ var vueRoot = new Vue({
                 ]
             }
         ],
+
         files: [
             {
                 labelName: 'Files',
                 labelId: 'files',
                 items: [
                     {
-                        listName: '7 CFR PART 226.6',
-                        listId: 'content-seven',
-                        href: 'https://www.ecfr.gov/cgi-bin/text-idx?SID=9c3a6681dbf6aada3632967c4bfeb030&mc=true&node=pt7.4.226&rgn=div5#se7.4.226_16'
-                    },
-                    {
                         listName: 'Corrective Action Document',
-                        listId: 'content-eight',
+                        listId: 'non-content',
                         href: 'https://www.nutritionnc.com/snp/pdf/cacfp/forms/CAD-Form-10-20.docx'
                     },
                     {
                         listName: 'Corrective Action Document Checklist',
-                        listId: 'content-eight',
+                        listId: 'non-content',
                         href: 'https://www.nutritionnc.com/snp/pdf/cacfp/forms/CAD-InstitutionChecklist-1019.docx'
                     }
                 ]
             }
         ],
+
         links: [
             {
                 labelName: 'Links',
@@ -233,42 +303,60 @@ var vueRoot = new Vue({
                 items: [
                     {
                         listName: 'NC CACFP Home Page',
-                        listId: 'content-nine',
+                        listId: 'non-content',
                         href: 'https://www.nutritionnc.com/snp/index.htm'
+                    },
+                    {
+                        listName: '7 CFR PART 226.6',
+                        listId: 'non-content',
+                        href: 'https://www.ecfr.gov/cgi-bin/text-idx?SID=9c3a6681dbf6aada3632967c4bfeb030&mc=true&node=pt7.4.226&rgn=div5#se7.4.226_16'
                     }
                 ]
             }
-        ]
+        ],
+
+        scores: {
+            currentScore: 0,
+            passingScore: 10
+        },
+
+        state: {
+            audioPlaying: false,
+            sectionReference: 'content-one', // resolves to sectionId
+            showModal: false,
+            modalContent: 'Default modal message'
+        }
     },
     methods: {
         setState: function(section) {
             this.state.sectionReference = section
         },
 
+        setModalState: function () {
+            this.state.showModal = !this.state.showModal
+        },
+        
+        setModalContent: function (content) {
+            this.state.modalContent = content
+        },
+
         setMediaOptions: function() {
             this.state.audioPlaying = !this.state.audioPlaying
+        },
+
+        addPoint: function(number) {
+            this.scores.currentScore += number
+            if(this.scores.currentScore == this.scores.passingScore) {
+                this.pushCert()
+            }
+        },
+
+        pushCert: function() {
+            this.files[0].items.push({
+                listName: 'Certificate',
+                listId: 'non-content',
+                href: 'https://www.ecfr.gov/cgi-bin/text-idx?SID=9c3a6681dbf6aada3632967c4bfeb030&mc=true&node=pt7.4.226&rgn=div5#se7.4.226_16'
+            })
         }
     }
 });
-
-// computed: {
-    //     currentModuleIndex: function() {
-    //         var modulefilter = this.passedView.moduleReference
-    //         return this.passedTemplate[0].modulesArray.findIndex(k => k.moduleId == modulefilter)
-    //     },
-
-    //     nextModuleId: function() {
-    //         var nextModuleIndex = this.currentModuleIndex + 1
-    //         return this.passedTemplate[0].modulesArray[nextModuleIndex].moduleId
-    //     },
-
-    //     currentSectionIndex: function() {
-    //         var sectionfilter = this.passedView.sectionReference
-    //         return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray.findIndex(k => k.sectionId == sectionfilter)
-    //     },
-
-    //     nextSectionId: function() {
-    //         var nextSectionIndex = this.currentSectionIndex + 1
-    //         return this.passedTemplate[0].modulesArray[this.currentModuleIndex].sectionsArray[nextSectionIndex].sectionId
-    //     }
-    // },

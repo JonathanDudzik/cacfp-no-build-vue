@@ -5705,6 +5705,12 @@ START rules that will come AFTER Bulma's variables
   padding: 1rem;
 }
 
+.my-modal-btn {
+  position: fixed;
+  top: 5%;
+  right: 5%;
+}
+
 .side-menu {
   /* height: 100%; */
   margin-top: 0.75rem;
