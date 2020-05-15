@@ -138,63 +138,50 @@ Vue.component("main-content", {
 
 Vue.component("side-menu", {
     props: ['passedContent', 'passedFiles', 'passedLinks', 'passedState'],
-    // data: function() {
-    //     return {
-    //         currentSectionSelector: 'content-oneSelector'
-    //     }
-    // },
-    computed: {
-        currentSection() {
-            console.log(this.passedState.sectionReference)
-            return this.passedState.sectionReference
-        }
-    },
     methods: {
         sideMenuHandler: function(section) {
             this.$emit('emit-state', section)
-            
-            if(document.getElementById(this.passedState.sectionReference + 'Selector')) {
-                this.sectionSelectorHandler()
-            }
         },
 
         sectionSelectorHandler: function() {
-            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
-            
-            this.currentSectionSelector = document.getElementById(this.passedState.sectionReference + 'Selector')
-            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
+            // remove the is-active class from each element
+            this.$refs.item.forEach(function(el) {el.removeAttribute("class", "is-active")})
+    
+            // add the is-active class to the value that is selected 
+            this.$refs.item.find(el => el.id == this.passedState).setAttribute("class", 'is-active')
         },
 
-        sliderHandler: function(type) {
-            this.$emit('emit-slider', type)
+        // sliderHandler: function(type) {
+        //     this.$emit('emit-slider', type)
 
-            // GSAP Timeline
-            TweenLite.defaultEase = Linear.easeNone
-            var fill = '#' + [type] + '-slider-fill'
-            var label = '#' + [type] + '-slider-label'
-            var knob = '#' + [type] + '-slider-knob'
+        //     // GSAP Timeline
+        //     TweenLite.defaultEase = Linear.easeNone
+        //     var fill = '#' + [type] + '-slider-fill'
+        //     var label = '#' + [type] + '-slider-label'
+        //     var knob = '#' + [type] + '-slider-knob'
 
-            var timeline = new TimelineMax({})
+        //     var timeline = new TimelineMax({})
             
-            if(this.passedState[type + 'Playing'] == true) { 
-                timeline.set(label, {text: "on", x: '-25px'}, 0.2)
-                timeline.to(knob, 0.2, {x: '48px'}, 0.2)
-                timeline.to(fill, 0.1, {backgroundColor: '#337AB7'}, 0.3)
-            }
+        //     if(this.passedState[type + 'Playing'] == true) { 
+        //         timeline.set(label, {text: "on", x: '-25px'}, 0.2)
+        //         timeline.to(knob, 0.2, {x: '48px'}, 0.2)
+        //         timeline.to(fill, 0.1, {backgroundColor: '#337AB7'}, 0.3)
+        //     }
 
-            if(this.passedState[type + 'Playing'] == false) {
-                timeline.to(fill, 0.2, {backgroundColor: '#092940'}, 0.2)
-                timeline.set(label, {text: "off", x: '0px'}, 0.2)
-                timeline.to(knob, 0.2, {x: '0px'}, 0.2)
-            }
-        }
-    },
-    updated: function() {
-        return this.sectionSelectorHandler()
+        //     if(this.passedState[type + 'Playing'] == false) {
+        //         timeline.to(fill, 0.2, {backgroundColor: '#092940'}, 0.2)
+        //         timeline.set(label, {text: "off", x: '0px'}, 0.2)
+        //         timeline.to(knob, 0.2, {x: '0px'}, 0.2)
+        //     }
+        // }
     },
     mounted: function() {
-        this.currentSectionSelector = document.getElementById(this.passedState.sectionReference + 'Selector')
-        gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
+        return this.sectionSelectorHandler()
+    },
+    watch: {
+        passedState: function () {
+            this.sectionSelectorHandler()
+        }
     }
 });
 
@@ -203,12 +190,6 @@ Vue.component("lateral-navigator", {
     methods: {
         navigateNext() {
             this.$emit('emit-navigate-next', this.nextModuleId)
-            
-            this.currentSectionSelector = document.getElementById(this.passedSectionRef + 'Selector')
-            // this.$emit('emit-state', currentSectionSelector)
-            gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '', color: '#262626'})
-
-            gsap.to(window, {duration: 0.5, scrollTo: 0})
         }
     },
     computed: {
@@ -226,11 +207,11 @@ Vue.component("lateral-navigator", {
             }
         }
     },
-    updated: function() {
-        this.currentSectionSelector = document.getElementById(this.passedSectionRef + 'Selector')
-        console.log(this.currentSectionSelector)
-        gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
-    }
+    // updated: function() {
+    //     this.currentSectionSelector = document.getElementById(this.passedSectionRef + 'Selector')
+    //     console.log(this.currentSectionSelector)
+    //     gsap.to(this.currentSectionSelector, 0.2, {backgroundColor: '#5f6c7b', color: 'white'})
+    // }
 })
 
 /***************************************************

@@ -382,7 +382,7 @@
                         v-bind:passed-content='content' 
                         v-bind:passed-files='files' 
                         v-bind:passed-links='links' 
-                        v-bind:passed-state='state'
+                        v-bind:passed-state='state.sectionReference'
                         v-on:emit-state="setState"
                         v-on:emit-slider="setMediaOptions"
                         inline-template>
@@ -391,7 +391,7 @@
                                 <div v-for="(content, key) in passedContent">
                                     <p class="menu-label my-padding-2-top is-size-5">{{ content.labelName }}</p>
                                     <ul v-for="(item, key) in content.items" class="menu-list" role="menu">
-                                        <li><a @click="sideMenuHandler(item.listId)" v-bind:id="item.listId + 'Selector'" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>
+                                        <li><a @click="sideMenuHandler(item.listId)" ref="item" v-bind:id="item.listId" class="is-size-6" tabindex="0" role="menuitem">{{item.listName}}</a></li>
                                     </ul>
                                 </div>
                                 <div v-for="(file, key) in passedFiles">
