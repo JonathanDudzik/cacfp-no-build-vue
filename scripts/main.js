@@ -157,15 +157,15 @@ Vue.component('audio-slider', {
             var timeline = new TimelineMax({})
             
             if(this.passedState == true) { 
-                timeline.set(label, {text: "on", x: '-5px'}, 0.2)
-                timeline.to(knob, 0.2, {x: '68px'}, 0.2)
+                timeline.set(label, {text: "on", x: '-7px'}, 0.2)
+                timeline.to(knob, 0.2, {left: '68%'}, 0.2)
                 timeline.to(fill, 0.1, {backgroundColor: '#337AB7'}, 0.3)
             }
 
             if(this.passedState == false) {
                 timeline.to(fill, 0.2, {backgroundColor: '#092940'}, 0.2)
                 timeline.set(label, {text: "off", x: '0px'}, 0.2)
-                timeline.to(knob, 0.2, {x: '0px'}, 0.2)
+                timeline.to(knob, 0.2, {left: '-13%'}, 0.2)
             }
         }
     },
@@ -177,7 +177,7 @@ Vue.component('audio-slider', {
 })
 
 Vue.component("side-menu-content", {
-    props: ['passedState', 'passedContent'],
+    props: ['passedSectionReference', 'passedContent'],
     methods: {
         sideMenuHandler: function(section) {
             this.$emit('emit-state', section)
@@ -185,14 +185,23 @@ Vue.component("side-menu-content", {
 
         sectionSelectorHandler: function() {
 
-            // remove the is-active class from each element
-            this.$refs.item.forEach(function(el) {el.removeAttribute("class", "is-active")})
-    
+            // remove the "is-active" class from each element
+            this.$refs.item.forEach(function(el){el.removeAttribute("class", "is-active")})
+            
+            // array of all menu item elements
+            var elements = this.$refs.item
+            
+            // the current selected section
+            var secRef = this.passedSectionReference
+            
+            // the "this" context for find() method
+            function isSelected(element) {
+                return element.id == secRef
+            }
             // add the is-active class to the value that is selected
-            // This unfortunitely does not work in IE11. Arrow functions are not supported and I cannot figure out how to
-            // get the "this" scope into the find() method.
-            // see "prototype.bind()" and https://michaelnthiessen.com/this-is-undefined/
-            // Ignore this feature for now.
+            return elements.find(isSelected).setAttribute("class", 'is-active')
+            
+            // This unfortunitely does not work in IE11
             // this.$refs.item.find(el => el.id == this.passedState).setAttribute("class", 'is-active')
         }
     },
@@ -200,7 +209,7 @@ Vue.component("side-menu-content", {
         return this.sectionSelectorHandler()
     },
     watch: {
-        passedState: function () {
+        passedSectionReference: function () {
             this.sectionSelectorHandler()
         }
     }
@@ -252,7 +261,7 @@ Vue.component("side-menu-certificate", {
                         {
                             listName: 'Download Certificate',
                             listId: 'non-content',
-                            href: 'https://www.ecfr.gov/cgi-bin/text-idx?SID=9c3a6681dbf6aada3632967c4bfeb030&mc=true&node=pt7.4.226&rgn=div5#se7.4.226_16'
+                            href: 'https://ncnutrition.adobeconnect.com/pxbf9fgxn1ud/'
                         }
                     ]
                 }
@@ -272,15 +281,30 @@ Vue.component("lateral-navigator", {
     computed: {
         // should these be named "modules?"
         currentModuleIndex: function () {
-            var modulefilter = this.passedSectionRef
-            return this.passedContent[0].items.findIndex(function(k) {k.listId == modulefilter})
+            var itemsArray = this.passedContent[0].items
+            var sectionRef = this.passedSectionRef
+            var newArray = []
+            
+            for (let i = 0; i < itemsArray.length; i++) {
+                newArray.push(itemsArray[i].listId)
+            }
+
+            function isSelected(element) {
+                return element == sectionRef
+            }
+
+            return newArray.findIndex(isSelected)
+            
+            // so much easier but no ie11 support
+            // return newArray.findIndex(item => item == this.passedSectionRef)
         },
 
         nextModuleId: function() {
             var nextModuleIndex = this.currentModuleIndex + 1
+            var nextModuleReference = this.passedContent[0].items[nextModuleIndex]
             
-            if(this.passedContent[0].items[nextModuleIndex]) {
-                return this.passedContent[0].items[nextModuleIndex].listId
+            if(nextModuleReference) {
+                return nextModuleReference.listId
             }
         }
     }
@@ -306,7 +330,7 @@ var vueRoot = new Vue({
                         listId: 'content-two'
                     },
                     {
-                        listName: 'Corrective Action Document',
+                        listName: 'Five Key Questions',
                         listId: 'content-three'
                     },
                     {

@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>CACFP Training Portal</title>
         <link rel="icon" type="image/x-icon" href="./media/favicon.ico"/>
-        <link rel="stylesheet" href="styles/normalize.css">
         <link rel="stylesheet" href="styles/main.css">
     </head>
 
@@ -18,6 +17,11 @@
                 <p>This site uses scripts for the interactive quiz at the end and will not work without scripts.</p>
             </div>
         </noscript>
+
+        <h2 class="ie-warning content is-large my-padding-2-top">
+            <strong>Internet Explorer detected.</strong>
+            <br>For the best experience, please use a modern browser such as Edge, Chrome, or Firefox.
+        </h2>
 
         <div id="vue-app">
             <!-- start vue-instance-wrapper -->
@@ -34,7 +38,7 @@
                             How to Complete a Corrective Action Document
                         </div>
                     </div>
-                    <div class="navbar-menu is-active">
+                    <div class="navbar-menu is-paddingless is-active">
                         <div class="navbar-end is-flex">
                             <a href="./media/transcript.pdf" target="_blank" aria-label="download PDF" class="navbar-item is-flex is-size-4">
                                 <img 
@@ -92,8 +96,8 @@
                                 <aside>
                                     <div class="content is-medium box">
                                         <h1>How to navigate this course</h1>
-                                        <p>Use the menu on the right to navigate to the various sections of this training.</p>
-                                        <p>There are three knowledge checks titled, "Test your Knowledge" in this trianing. Once all three are complete, the <strong>certificate</strong> to appear in the menu under Recources</p>
+                                        <p>Use the menu to navigate to the various sections of this training.</p>
+                                        <p>There are three knowledge checks in this trianing. Once all three are complete, the <strong>certificate</strong> will appear in the menu under Recources.</p>
                                         <p>The <strong>Play Audio</strong> button at the bottom of the menu toggles the audio for this training on and off.</p>
                                         <p>The <strong>Download PDF</strong> button along the top of your screen will download a PDF version of this training.</p>
                                         <p>The <strong>Download MP3</strong> button along the top of your screen will download an audio only MP3 version of this training.</p>
@@ -131,12 +135,14 @@
                                         <li>Incomplete Income Eligibility Applications</li>
                                         <li>Unauthorized personnel have access to confidential program participant information</li>
                                     </ol>
-                                    <h1>Test your Knowledge</h1>
-                                    <p>Given the above examples of program violations, how many seperate Corrective Action Documents would be needed?</p>
-                                    <div class="level">
-                                        <button style="margin: 0 2rem;" class="button is-large level-item" @click="manageScore(0)">1</button>
-                                        <button style="margin: 0 2rem;" class="button is-large level-item" @click.once="manageScore(10)">3</button>
-                                        <button style="margin: 0 2rem;" class="button is-large level-item" @click="manageScore(0)">6</button>
+                                    <div class="box">
+                                        <h1>Test your Knowledge</h1>
+                                        <p>Given the above examples of program violations, how many seperate Corrective Action Documents would be needed?</p>
+                                        <div class="level">
+                                            <button style="margin: 0 2rem;" class="button is-large level-item" @click="manageScore(0)">1</button>
+                                            <button style="margin: 0 2rem;" class="button is-large level-item" @click.once="manageScore(10)">3</button>
+                                            <button style="margin: 0 2rem;" class="button is-large level-item" @click="manageScore(0)">6</button>
+                                        </div>
                                     </div>
                                     <h1>Supporting Documentation</h1>
                                     <p>Supporting documentation must be submitted with the Corrective Action Document. Take a moment to look over these examples:</p>
@@ -225,32 +231,34 @@
                                 </figure>
                                 <aside class="columns my-padding-3-top">
                                     <div class="column is-centered is-offset-2 content is-large">
-                                        <h1>Test your Knowledge</h1>
-                                        <p>Which of the five questions specifically require a step-by-step detailed description?</p>
-                                        <div class="columns is-multiline">
-                                            <div class="column is-full">
-                                                <div @click="manageScore(0)" >
-                                                    <button class="level-item button">1: Who will address the program violation?</button>
-                                                </div>  
-                                            </div>
-                                            <div class="column is-full">
-                                                <div @click.once="manageScore(10)" >
-                                                    <button class="level-item button">2: What are the procedures for correcting the program violation(s)?</button>
+                                        <div class="box">
+                                            <h1>Test your Knowledge</h1>
+                                            <p>Which of the five questions specifically require a step-by-step detailed description?</p>
+                                            <div class="columns is-multiline">
+                                                <div class="column is-full">
+                                                    <div @click="manageScore(0)" >
+                                                        <button class="level-item button">1: Who will address the program violation?</button>
+                                                    </div>  
                                                 </div>
-                                            </div>
-                                            <div class="column is-full">
-                                                <div @click="manageScore(0)" >
-                                                    <button class="level-item button">3: When will the procedures be implemented?</button>
+                                                <div class="column is-full">
+                                                    <div @click.once="manageScore(10)" >
+                                                        <button class="level-item button">2: What are the procedures for correcting the program violation(s)?</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="column is-full">
-                                                <div @click="manageScore(0)" >
-                                                    <button class="level-item button">4: Where will the document be retained?</button>
+                                                <div class="column is-full">
+                                                    <div @click="manageScore(0)" >
+                                                        <button class="level-item button">3: When will the procedures be implemented?</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="column is-full">
-                                                <div @click="manageScore(0)" >
-                                                    <button class="level-item button">5: How will staff be informed about the new policies and procedures?</button>
+                                                <div class="column is-full">
+                                                    <div @click="manageScore(0)" >
+                                                        <button class="level-item button">4: Where will the document be retained?</button>
+                                                    </div>
+                                                </div>
+                                                <div class="column is-full">
+                                                    <div @click="manageScore(0)" >
+                                                        <button class="level-item button">5: How will staff be informed about the new policies and procedures?</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,7 +274,8 @@
                             v-if="state.sectionReference == 'content-four'"
                             key="four">
                             <template v-slot:col1>
-                                
+                                <audio id="audio" src="./media/audio/4.mp3"></audio>
+
                                 <div class="content is-medium has-text-grey-dark">
                                     <h1>Quick Review</h1>
                                     <p>Let’s do a quick review of what we covered in this training. When submitting a Correct Action Document remember to</p>
@@ -299,7 +308,8 @@
                             v-if="state.sectionReference == 'content-five'"
                             key="five">
                             <template v-slot:col1>
-                                
+                                <audio id="audio" src="./media/audio/5.mp3"></audio>
+
                                 <div class="content is-medium has-text-grey-dark">
                                     <h1>Submitting a Corrective Action Document in NC CARES</h1>
                                     <p>Now we will look at the steps for submitting the Corrective Action Document on NC CARES.</p>
@@ -341,7 +351,7 @@
                                     </figure>
                                     <p>After uploading the file, you will be directed back to the Findings Details page. Scroll down to the bottom of the screen and first verify that your file attached correctly by seeing it in the Document Attachments section.</p>
                                     <p>Finally, make sure you click the save button at the bottom of the page.</p>
-                                    <aside class="content is-large my-padding-3-top">
+                                    <aside class="content is-large my-padding-3-top box">
                                         <h1>Test your Knowledge</h1>
                                         <p>Where should you upload your completed Corrective Action Document?</p>
                                         <div class="columns is-multiline">
@@ -375,6 +385,8 @@
                             v-if="state.sectionReference == 'content-six'"
                             key="six">
                             <template v-slot:col1>
+                                <audio id="audio" src="./media/audio/6.mp3"></audio>
+
                                 <div class="content is-medium has-text-grey-dark">
                                     <h1>Additional points</h1>
                                     <p>Here are some additional points to keep in mind:</p>
@@ -400,6 +412,7 @@
                             v-if="state.sectionReference == 'content-seven'"
                             key="seven">
                             <template v-slot:col1>
+                                <audio id="audio" src="./media/audio/7.mp3"></audio>
                                 
                                 <div class="content is-medium has-text-grey-dark">
                                     <h1>CFDA and the Federal Awarding Agency</h1>
@@ -432,7 +445,7 @@
                             <nav role="menu" class="menu" aria-label="section navigation">
                                 <side-menu-content
                                     v-bind:passed-content='sections'  
-                                    v-bind:passed-state='state.sectionReference'
+                                    v-bind:passed-section-reference='state.sectionReference'
                                     v-on:emit-state="setState"
                                     inline-template
                                 >
@@ -470,14 +483,36 @@
                                     v-on:emit-slider="setMediaOptions"
                                     inline-template
                                 >
-                                    <div class="level is-flex my-padding-2-top my-marg-vertical-1 top-bordered">
-                                        <span class="level-item my-pad-horizontal-1">Play Audio</span>
-                                        <button @click="sliderHandler()" class="slider level-item">
-                                            <div id='audio-slider-fill' class="slider__fill"></div>
-                                            <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
-                                            <div id='audio-slider-knob' class="slider__knob"></div>
-                                        </button>
+                                    <div class="columns is-desktop is-vcentered my-marg-vertical-1 my-pad-vertical-1 top-bordered">
+                                        
+                                            <div class="column">
+                                                <p>Play Audio</p>
+                                            </div>
+                                            <div class="column">
+                                                <button @click="sliderHandler()" class="slider">
+                                                    <div id='audio-slider-fill' class="slider__fill"></div>
+                                                    <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
+                                                    <div id='audio-slider-knob' class="slider__knob"></div>
+                                                </button>
+                                            </div>
+                                   
+                                        
+                                       
                                     </div>
+                                    <!-- <div class="level my-padding-2-top top-bordered">
+                                        <div class="level-left">
+                                            <p class="level-item">Play Audio</p>
+                                        </div>
+                                        <div class="level-right">
+                                            <div class="level-item">
+                                                <button @click="sliderHandler()" class="slider">
+                                                    <div id='audio-slider-fill' class="slider__fill"></div>
+                                                    <p id='audio-slider-label' class="slider__label text text_uppercase">off</p>
+                                                    <div id='audio-slider-knob' class="slider__knob"></div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                 </audio-slider>
                             </nav>
                         </div>
@@ -494,11 +529,11 @@
                         <div class="level">
                             <div class="level-item"></div>
                             <button  
-                            v-if="this.nextModuleId" 
-                            @click="navigateNext()"
-                            class="button is-large level-item"
+                                v-if="nextModuleId" 
+                                @click="navigateNext()"
+                                class="button is-large level-item ie-support"
                             >
-                            Continue to next section &#62;
+                                Continue to next section &#62;
                             </button>
                             <div class="level-item"></div>
                         </div>

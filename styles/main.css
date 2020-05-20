@@ -10877,8 +10877,13 @@ START rules that will come AFTER Bulma's variables
 /* rules that modify Bulma selectors */
 
 .navbar {
+  /* background-color: #092940; */
   background-color: #092940;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.navbar-end {
+  background-color: #092940;
 }
 
 .navbar-item img {
@@ -10913,6 +10918,8 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   background-color: #397aac; 
 }
 
+/* my utility styles */
+
 .my-shadow-small {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -10922,7 +10929,6 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   margin-bottom: 1.5rem;
 }
 
-/* my utility styles */
 .my-pad-vertical-1 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -10988,7 +10994,7 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
   width: 60px;
   height: 26px;
   border-radius: 25px;
-  border: .08rem solid;
+  border: 1.5px solid;
   background-color: transparent;
   cursor: pointer;
   z-index: 1;
@@ -11020,13 +11026,33 @@ a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-i
 }
 
 .slider__knob {
-  position: absolute;
-  top: 0px;
-  left: 1px;
+  position: relative;
+  top: 0;
+  left: -12%;
   width: 26px;
-  height: 26px;
+  height: 27px;
   border-radius: 100%;
   background-color: grey;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   z-index: 4;
+}
+
+/* IE11 styles */
+.ie-support {
+  display: none;
+}
+
+@supports(display: grid) {
+  .ie-support {
+    display: block;
+  }
+}
+
+.ie-warning {
+  display: inline-block;
+}
+
+@supports(display: grid) {
+  .ie-warning {
+      display: none;
+  }
 }
